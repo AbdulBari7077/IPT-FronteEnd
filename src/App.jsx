@@ -15,8 +15,8 @@ function App() {
     <div className="App">
        <BrowserRouter>
             <Routes >
-                <Route path="/"  element={<Home/>} />
-                <Route path="/landing"  element={ <LandingPage/> } />
+                <Route path="/"  element={<LandingPage/>} />
+                <Route path="/home"  element={ <Home/> } />
                 <Route path="/details/:type/:id"  element={<Details/>} />
             </Routes >        
         </BrowserRouter>
