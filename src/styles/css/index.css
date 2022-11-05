@@ -163,9 +163,16 @@ form .form-main .signup-btn {
   background-color: red;
   padding: 5px 10px 5px 10px;
   border-radius: 3px;
+  cursor: pointer;
+}
+.header-button:hover{
+  background-color: red;
+  padding: 5px 15px 5px 15px;
+  border-radius: 3px;
 }
 
 .header-container {
+  z-index: 100000;
   margin-top: 10px;
   width: 100%;
   height: 105vh;
@@ -185,7 +192,9 @@ form .form-main .signup-btn {
   box-shadow: inset 0 70px 250px #000, inset -0 -70px 250px #000;
 }
 
-header,
+.header{
+  z-index: 999;
+}
 .showcase-wrapper {
   position: relative;
   z-index: 2;
