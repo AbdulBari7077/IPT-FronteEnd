@@ -1,6 +1,5 @@
 {
-  "name": "netflix-clone-reactjs",
-  "homepage": "https://mcosta21.github.io/netflix-clone-reactjs",
+  "name": "netfix",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -32,8 +31,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "gh-pages": "^2.0.1"
   }
 }
