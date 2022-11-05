@@ -53,7 +53,7 @@ const Footer = () => {
           <a href="/">Contact Us</a>
         </li>
       </ul>
-      <p className="footer-text-last">Netflix India</p>
+      <p className="footer-text-last">Netflix</p>
       <p className="footer-text-msg">
         Cloned by 19K BATCH Section A FAST NUCES Team 
       </p>
