@@ -6,12 +6,7 @@ const Form = () => {
         Ready to watch? Enter your email to create or restart your membership.
       </h3>
       <div className="form-main">
-        <label className="label-email-wrapper">
-          <label className="label-email" htmlFor="email">
-            Email address
-          </label>
-          <input className="input-email" type="email" name="email" id="email" />
-        </label>
+        <input className="input-email" type="email" name="email" id="email" placeholder='Email Address'/>
         <button className="red-btn signup-btn">
           <span>Get Started</span>
           <span className="chevron-right-arrow">

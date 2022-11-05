@@ -7,6 +7,7 @@ const Header = () => {
     <div className="header-container">
       <header>
         <img className="netflix-logo" src={NetflixLogo} alt="Netflix Logo" />
+        <button className='header-button'> Sign in</button>
       </header>
       <div className="showcase-wrapper">
         <div className="showcase">
