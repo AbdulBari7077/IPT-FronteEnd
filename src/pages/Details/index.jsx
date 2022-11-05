@@ -23,7 +23,7 @@ function Details(){
             let trailer = await Tmdb.getTrailerVideo(id, type)
             setMovieDetails(movie);
             setTrailerVideo(trailer);
-            setDescriptionVideo(movie.overview.length > 120 ? movie.overview.substring(0, 120) + '...' : movie.overview);
+            setDescriptionVideo(movie.overview.length > 300 ? movie.overview.substring(0, 300) + '...' : movie.overview);
             //console.log(movie)
         }
         loadAll();
@@ -51,7 +51,7 @@ function Details(){
                 backgroundImage: `url(https://image.tmdb.org/t/p/original/${movieDetails.backdrop_path})`
             }}
         >   
-        <Link to="/" className="details--backbutton">Voltar</Link>
+        <Link to="/home" className="details--backbutton">Back</Link>
             <section> 
                 <div>
                     <div className="details--info">
@@ -65,9 +65,13 @@ function Details(){
                     {
                         (trailerVideo.results !== undefined && trailerVideo.results.length !== 0)
                         &&
-                        <span onClick={() => handleShowTrailer()} className="details--viewtrailer"><div><TheatersIcon />Assistir trailer</div></span>
+                            <span onClick={() => handleShowTrailer()} className="details--viewtrailer">
+                                <div className="viewtrailer">
+                                    <TheatersIcon />watch trailer
+                                </div>
+                            </span>
                     }
-                     {
+                     {/* {
                         (movieDetails.homepage !== undefined && movieDetails.homepage !== '') && 
                             <a href={movieDetails.homepage} target="_blank" rel="noopener noreferrer" className="details--officialsite">
                                 <div>
@@ -81,7 +85,7 @@ function Details(){
                                 
                                 </div>
                             </a>
-                     }
+                     } */}
                 </div>
             </section>
             {
