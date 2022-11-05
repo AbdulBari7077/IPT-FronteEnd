@@ -36,11 +36,9 @@ function Details(){
             setUrlVideo(url);
         }
     }
-
     function handleVideoFullScreen(){
         setVideoFullScreen(!videoFullScreen);
     }
-    
     
     return (
         <main 
@@ -71,21 +69,6 @@ function Details(){
                                 </div>
                             </span>
                     }
-                     {/* {
-                        (movieDetails.homepage !== undefined && movieDetails.homepage !== '') && 
-                            <a href={movieDetails.homepage} target="_blank" rel="noopener noreferrer" className="details--officialsite">
-                                <div>
-                                    {
-                                        movieDetails.homepage.includes('netflix') ?
-                                        <img alt="Netflix" src={iconNetflix} width="23"/> :
-                                        movieDetails.homepage.includes('amazon') ?
-                                        <img alt="Amazon" src={iconAmazon} width="23"/> :
-                                        <LanguageIcon />
-                                    }
-                                
-                                </div>
-                            </a>
-                     } */}
                 </div>
             </section>
             {
