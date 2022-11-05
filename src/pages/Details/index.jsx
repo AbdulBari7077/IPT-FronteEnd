@@ -8,7 +8,7 @@ import iconAmazon from '../../assets/icon-amazon.png';
 import iconNetflix from '../../assets/icon-netflix.png';
 import './styles.css';
 import { Link } from 'react-router-dom';
-
+import Rate from '../../components/rating';
 function Details(){
     const { id, type } = useParams();
     const [movieDetails, setMovieDetails] = useState({});
@@ -50,7 +50,7 @@ function Details(){
                 backgroundPosition: 'center',
                 backgroundImage: `url(https://image.tmdb.org/t/p/original/${movieDetails.backdrop_path})`
             }}
-        >   
+        >  
         <Link to="/" className="details--backbutton">Voltar</Link>
             <section> 
                 <div>
@@ -61,6 +61,7 @@ function Details(){
                     <h1>{movieDetails.original_title || movieDetails.original_name}</h1>
 
                     <h4>{descriptionVideo}</h4>
+                    <Rate /> 
 
                     {
                         (trailerVideo.results !== undefined && trailerVideo.results.length !== 0)
