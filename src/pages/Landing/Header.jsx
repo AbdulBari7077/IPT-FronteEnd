@@ -1,13 +1,12 @@
 import React from 'react';
 import NetflixLogo from '../../assets/logo.png';
 import Form from '../../components/subComponents/Form';
-import SignIn from '../SignIn/SignIn';
 import {Routes, Route, useNavigate} from 'react-router-dom';
 
 const Header = () => {
   const navigate = useNavigate();
   const navigateSignIn = () => {
-    navigate('/signIn');
+    navigate('/login');
   };
   return (
     <div className="header-container">
