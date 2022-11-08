@@ -1,6 +1,8 @@
-
+.lists{
+    margin-top: 0px !important;
+}
 .movieRow {
-    margin-bottom: 40px;
+    margin-top: 30px;
 }
 
 .movieRow h2 {
@@ -18,7 +20,7 @@
 
 .movieRow--item {
     display: inline-block;
-    width: 200px;
+    width: 150px;
     cursor: pointer;
 }
 
@@ -35,8 +37,8 @@
 
 .movieRow--left, .movieRow--right {
     position: absolute;
-    width: 40px;
-    height: 300px;
+    width: 30px;
+    height: 250px;
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 99;
     display: flex;

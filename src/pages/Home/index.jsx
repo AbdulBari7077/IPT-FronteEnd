@@ -3,7 +3,6 @@ import Tmdb from '../../Tmdb';
 import MovieRow from '../../components/MovieRow';
 import FeaturedMovie from '../../components/FeaturedMovie';
 import Header from '../../components/Header';
-
 import './styles.css';
 import Footer from '../Landing/Footer';
 

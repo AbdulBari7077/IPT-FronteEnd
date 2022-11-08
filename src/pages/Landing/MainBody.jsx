@@ -5,8 +5,8 @@ import tv from '../../assets/tv.png';
 import mobile from '../../assets/mobile.jpg';
 import devicePile from '../../assets/device-pile-in.png';
 import child from '../../assets/children.png';
-// import videoTv from '../../assets/video-tv-in-0819.m4v';
-// import videoDevicePile from '../../assets/video-devices-in.m4v';
+import videoTv from '../../assets/video-tv.mp4';
+import videoDevicePile from '../../assets/video-tv2.mp4';
 import downloadIcon from '../../assets/download-icon.gif';
 
 const MainBody = () => {
@@ -18,7 +18,7 @@ const MainBody = () => {
           subtitle="Watch on smart TVs, PlayStation, Xbox, Chromecast, Apple TV, Blu-ray players and more."
           image={tv}
           imageAlt="tv"
-          videoTv={''}
+          videoTv={videoTv}
         />
       </section>
       <section className="download-your-shows-section">
@@ -36,7 +36,7 @@ const MainBody = () => {
           subtitle="Stream unlimited movies and TV shows on your phone, tablet, laptop, and TV."
           image={devicePile}
           imageAlt="device pile in"
-          videoDevicePile={''}
+          videoDevicePile={videoDevicePile}
         />
       </section>
       <section className="children-section">

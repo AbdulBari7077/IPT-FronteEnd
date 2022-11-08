@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import './App.css'
 import {BrowserRouter, Routes , Route} from 'react-router-dom';
-
 import Home from './pages/Home';
 import Details from './pages/Details';
 import LandingPage from './pages/Landing/LandingPage';
+import VideoPlayer from './pages/VideoPlayer/VideoPlayer';
+import Login from './pages/Login/Login';
+import SignUp from './pages/SignUp/SignUp';
 
 
 function App() {
@@ -18,6 +19,9 @@ function App() {
                 <Route path="/"  element={<LandingPage/>} />
                 <Route path="/home"  element={ <Home/> } />
                 <Route path="/details/:type/:id"  element={<Details/>} />
+                <Route path="/login" element={<Login/>} />
+                <Route path="/videoPlayer" element={<VideoPlayer/>} />
+                <Route path="/register"  element={<SignUp/>} />
             </Routes >        
         </BrowserRouter>
     </div>

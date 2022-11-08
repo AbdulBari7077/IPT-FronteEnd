@@ -1,12 +1,18 @@
 import React from 'react';
 import NetflixLogo from '../../assets/logo.png';
 import Form from '../../components/subComponents/Form';
+import {Routes, Route, useNavigate} from 'react-router-dom';
 
 const Header = () => {
+  const navigate = useNavigate();
+  const navigateSignIn = () => {
+    navigate('/login');
+  };
   return (
     <div className="header-container">
       <header>
         <img className="netflix-logo" src={NetflixLogo} alt="Netflix Logo" />
+        <button className='header-button'  onClick={navigateSignIn}> Sign in</button>
       </header>
       <div className="showcase-wrapper">
         <div className="showcase">

@@ -2,6 +2,8 @@ import React from 'react';
 import './styles.css';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import AddIcon from '@mui/icons-material/Add';
+import { Link } from 'react-router-dom';
+import VideoPlayer from '../../pages/VideoPlayer/VideoPlayer';
 
 function FeaturedMovie( { item } ) {
 
@@ -11,10 +13,14 @@ function FeaturedMovie( { item } ) {
     genres.push(item.genres[i].name);
   }
   let description = item.overview.length > 200 ? item.overview.substring(0, 200) + '...' : item.overview;
-
+//   console.log(`https://image.tmdb.org/t/p/original${item.backdrop_path}`)
+  function handlePlayVideo(){
+    
+  }
   return (
     <section 
         className="featured" 
+        
         style={{
             backgroundSize: 'cover',
             backgroundPosition: 'center',
@@ -33,7 +39,7 @@ function FeaturedMovie( { item } ) {
 
                 <div className="featured--description">{description}</div>
                 <div className="featured--buttons">
-                    <a href="/" disabled className="featured--watchbutton"><div><PlayArrowIcon /> Play Now</div></a>
+                    <a onClick={() => handlePlayVideo()} className="featured--watchbutton"><div><PlayArrowIcon/> Play Now</div></a>
                     <a href="/" disabled className="featured--mylistbutton"><div><AddIcon />My List</div></a>
                 </div>
                 <div className="featured--genres"><strong>Genere:</strong> {genres.join(', ')}</div>
