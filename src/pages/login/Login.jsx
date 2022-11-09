@@ -1,22 +1,31 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Header from '../../components/Header';
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { LoginApi } from '../../api/Api';
+import EmailInput from '../../components/Form/EmailInput';
+
 
 import './style.css';
-
 export default function Login() {
+    // const navigate = useNavigate();
+    const HandleLogin =(event)=>{
+        event.preventDefault();
+        const {userEmail , password} = document.forms[0];
+        if(LoginApi(userEmail.value,password.value))
+        {
+           return console.log("Login successful");
+        }
+        return console.log("Login Failed");
+    }
     return (
         <div className="login-body">
             <div className='login-form'>
                 <h2 className='login-header'>Sign In </h2>
-                <form action="/home">
-                    <div className='form-field'>
-                        <input className='login-form-input' placeholder='Email Address' type="text" name="first_name" required />
-                    </div>
+                <form  onSubmit={HandleLogin}>
+                    <EmailInput/>
                     <div className='form-field'>
                         <input className='login-form-input' placeholder='Password' type="password" name="password" required />
                     </div>
-                    <button className="signin-button" type="submit">Sign In</button>
+                    <button className="signin-button" type="submit" >Sign In</button>
                 </form>
                 <div className='login-footer'>
                     <p>New to Netflix?<Link to="/register">Sign Up </Link>Now.</p>

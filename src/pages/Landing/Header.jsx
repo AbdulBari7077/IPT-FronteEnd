@@ -4,6 +4,7 @@ import Form from '../../components/subComponents/Form';
 import {Routes, Route, useNavigate} from 'react-router-dom';
 
 const Header = () => {
+  localStorage.clear();
   const navigate = useNavigate();
   const navigateSignIn = () => {
     navigate('/login');
