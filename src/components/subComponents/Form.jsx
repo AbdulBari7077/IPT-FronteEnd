@@ -1,10 +1,14 @@
 import React from 'react';
 import { useState } from 'react';
+import { useNavigate} from 'react-router-dom';
 const Form = () => {
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(`The Email you entered was: ${email}`)
+    console.log(`The Email you entered was: ${email}`);
+    localStorage.setItem('userEmail', JSON.stringify(email));
+    navigate('/login');
   }
   return (
     <form onSubmit={handleSubmit}>
@@ -12,7 +16,7 @@ const Form = () => {
         Ready to watch? Enter your email to create or restart your membership.
       </h3>
       <div className="form-main">
-        <input className="input-email" type="email" id="email" placeholder='Email Address' value={email}  onChange={(e) => setEmail(e.target.value)}/>
+        <input className="input-email" type="email" id="email" placeholder='Email Address' value={email}  onChange={(e) => setEmail(e.target.value)} required/>
         <button className="red-btn signup-btn">
           <span>Get Started</span>
           <span className="chevron-right-arrow" >
