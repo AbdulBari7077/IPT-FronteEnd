@@ -28,12 +28,25 @@
 }
 
 .details--info {
+ 
+  display: flex;
   margin-bottom: 30px;
   
 }
-
+.rate-movie{
+  padding: 10px;
+  margin-left: 20px;
+  border: 2px solid white;
+  border-radius: 5px;
+  font-size: small !important;
+}
+.rate-movie:hover{
+  border-color: #d91921;
+}
 .details--info h3 {
-  width: 50px;
+  display: flex;
+  align-items: center;
+  width: max-content;
   padding: 10px;
   border-radius: 4px;
 }

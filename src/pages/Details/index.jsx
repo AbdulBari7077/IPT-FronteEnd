@@ -54,6 +54,7 @@ function Details(){
                 <div>
                     <div className="details--info">
                         <h3 className={movieDetails.vote_average > 5 ? 'positive' : 'negative'}>{movieDetails.vote_average * 10 + '%'}</h3>
+                        <button className='rate-movie'> Rate Movie</button>
                     </div>
 
                     <h1>{movieDetails.original_title || movieDetails.original_name}</h1>
