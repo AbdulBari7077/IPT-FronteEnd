@@ -8,6 +8,7 @@ import iconAmazon from '../../assets/icon-amazon.png';
 import iconNetflix from '../../assets/icon-netflix.png';
 import './styles.css';
 import { Link } from 'react-router-dom';
+import RateDialog from '../../components/rateMovie';
 
 function Details(){
     const { id, type } = useParams();
@@ -16,7 +17,8 @@ function Details(){
     const [urlVideo, setUrlVideo] = useState();
     const [videoFullScreen, setVideoFullScreen] = useState(false);
     const [descriptionVideo, setDescriptionVideo] = useState();
-
+    const [dialogRateOpen, setDialogRateOpen] = React.useState(false);
+    const [rateValue, setRateValue] = React.useState(0);
     useEffect(() => {
         const loadAll = async () => {
             let movie = await Tmdb.getMovieInfo(id, type);
@@ -28,7 +30,10 @@ function Details(){
         }
         loadAll();
     }, [id, type])
-    
+    const handleCloseDialog = () => {
+        setDialogRateOpen(false);
+        console.log(rateValue)
+      }
     function handleShowTrailer(){
         const trailer = trailerVideo.results;
         if(trailer !== undefined && trailer.length > 0){
@@ -41,6 +46,13 @@ function Details(){
     }
     
     return (
+        <>
+        <RateDialog 
+        open={dialogRateOpen}
+        setOpen={setDialogRateOpen}
+        handleCloseRateDialog={handleCloseDialog}
+        setRateValue={setRateValue}
+        />
         <main 
             className="details" 
             style={{
@@ -48,13 +60,15 @@ function Details(){
                 backgroundPosition: 'center',
                 backgroundImage: `url(https://image.tmdb.org/t/p/original/${movieDetails.backdrop_path})`
             }}
-        >   
+            >   
         <Link to="/home" className="details--backbutton">Back</Link>
             <section> 
                 <div>
                     <div className="details--info">
                         <h3 className={movieDetails.vote_average > 5 ? 'positive' : 'negative'}>{movieDetails.vote_average * 10 + '%'}</h3>
-                        <button className='rate-movie'> Rate Movie</button>
+                        <button className='rate-movie' onClick={()=>{
+                            setDialogRateOpen(true)
+                        }}> Rate Movie</button>
                     </div>
 
                     <h1>{movieDetails.original_title || movieDetails.original_name}</h1>
@@ -85,6 +99,7 @@ function Details(){
                 </aside>
             }
         </main>
+            </>
     )
 }
 
