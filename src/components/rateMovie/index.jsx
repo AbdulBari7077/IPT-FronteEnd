@@ -1,8 +1,10 @@
-import Rating from "material-ui-rating";
+import Rating from '@mui/material/Rating';
 import * as React from "react";
-import { MuiThemeProvider, createTheme } from "@material-ui/core";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Dialog, DialogActions, DialogContent, DialogContentText } from "@mui/material";
-import Button from '@material-ui/core/Button';
+import { Button } from '@mui/material';
+import "./rateMovie.css"
+
 const RateDialog = (props) => {
   const [value, setValue] = React.useState(2);
   const myTheme = createTheme({
@@ -24,16 +26,17 @@ const RateDialog = (props) => {
     };
     
     return (
-        <Dialog onClose={handleClose} open={open}>
-      <DialogContent style={{backgroundColor:'black'}}>
+      <Dialog  onClose={handleClose} open={open}>
+      <DialogContent  className='Dialograting' style={{backgroundColor:''}}>
         <DialogContentText>
-          <MuiThemeProvider theme={myTheme}>
+          <ThemeProvider theme={myTheme}>
             <Rating
+              className='rating'
               value={value}
               max={5}
               onChange={(value) => setValue(value)}
               />
-          </MuiThemeProvider>
+          </ThemeProvider>
         </DialogContentText>
       </DialogContent>
       <DialogActions style={{backgroundColor:'black'}}>
