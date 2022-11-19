@@ -31,7 +31,6 @@ const RateDialog = (props) => {
           <ThemeProvider theme={myTheme}>
           <Rating
           style={{color:'red',stroke:'red'}}
-        name="simple-controlled"
         value={value}
         onChange={(event, newValue) => {
           setValue(newValue);
