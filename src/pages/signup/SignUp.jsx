@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SignUpApi } from '../../api/Api';
-import EmailInput from '../../components/Form/EmailInput';
+import EmailInput from '../../components/EmailForm/EmailInput';
 
 import '../Login/style.css';
 

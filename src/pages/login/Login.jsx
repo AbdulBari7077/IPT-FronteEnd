@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { LoginApi } from '../../api/Api';
-import EmailInput from '../../components/Form/EmailInput';
+import EmailInput from '../../components/EmailForm/EmailInput';
 
 
 import './style.css';

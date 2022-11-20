@@ -8,6 +8,7 @@ import VideoPlayer from './pages/VideoPlayer/VideoPlayer';
 import Login from './pages/Login/Login';
 import SignUp from './pages/SignUp/SignUp';
 import ChoosePlan from './pages/ChoosePlan/ChoosePlan';
+import CreditCard from './pages/CreditCard/CreditCard';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/videoPlayer" element={<VideoPlayer/>} />
                 <Route path="/register"  element={<SignUp/>} />
                 <Route path="/choosePlan"  element={<ChoosePlan/>} />
+                <Route path="/creditCard"  element={<CreditCard/>} forceRefresh={true}/>
             </Routes >        
         </BrowserRouter>
     </div>
