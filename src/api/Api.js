@@ -1,19 +1,19 @@
 
-const BASE_URL = "http://backend:3980"
-export const LoginApi = (userEmail, password) => {
+const BASE_URL = "https://localhost:44318"
+
+export const LoginApi = async (userEmail, password) => {
     try {
-        console.log(userEmail, password);
-        axios.post(`${BASE_URL}/login`, {
-            userEmail: userEmail,
-            password: password
+        await axios.post(`${BASE_URL}/user/login`, {
+            Email: userEmail,
+            Password: password
         })
-            .then(function (response) {
-                console.log(response);
-                return true;
-            })
-            .catch(function (error) {
-                throw(error)
-            });
+        .then(function (response) {
+            console.log(response);
+            return true;
+        })
+        .catch(function (error) {
+            throw (error)
+        });
     }
     catch (err) {
         console.log(err);
@@ -21,21 +21,19 @@ export const LoginApi = (userEmail, password) => {
     }
 }
 
-export const SignUpApi = (userName, userEmail, password) => {
+export const SignUpApi = async (userName, userEmail, password) => {
     try {
-        console.log(userName,userEmail, password);
-        axios.post(`${BASE_URL}/register`, {
-            userName:userName,
-            userEmail: userEmail,
-            password: password
+        const response =await axios.post(`${BASE_URL}/user/Register`, {
+            Name:userName,
+            Email: userEmail,
+            Password: password
         })
-            .then(function (response) {
-                console.log(response);
-                return true;
-            })
-            .catch(function (error) {
-                throw(error)
-            });
+        if(response)
+        {
+            console.log(response);
+            return true;
+        }
+        throw (error)
     }
     catch (err) {
         console.log(err);

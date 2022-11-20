@@ -7,6 +7,7 @@ import LandingPage from './pages/Landing/LandingPage';
 import VideoPlayer from './pages/VideoPlayer/VideoPlayer';
 import Login from './pages/Login/Login';
 import SignUp from './pages/SignUp/SignUp';
+import ChoosePlan from './pages/ChoosePlan/ChoosePlan';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/login" element={<Login/>} />
                 <Route path="/videoPlayer" element={<VideoPlayer/>} />
                 <Route path="/register"  element={<SignUp/>} />
+                <Route path="/choosePlan"  element={<ChoosePlan/>} />
             </Routes >        
         </BrowserRouter>
     </div>
