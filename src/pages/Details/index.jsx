@@ -18,7 +18,7 @@ function Details(){
     const [videoFullScreen, setVideoFullScreen] = useState(false);
     const [descriptionVideo, setDescriptionVideo] = useState();
     const [dialogRateOpen, setDialogRateOpen] = React.useState(false);
-    const [rateValue, setRateValue] = React.useState(0);
+    const [rateValue, setRateValue] = React.useState(3);
     useEffect(() => {
         const loadAll = async () => {
             let movie = await Tmdb.getMovieInfo(id, type);
@@ -32,7 +32,7 @@ function Details(){
     }, [id, type])
     const handleCloseDialog = () => {
         setDialogRateOpen(false);
-        console.log(rateValue)
+        
       }
     function handleShowTrailer(){
         const trailer = trailerVideo.results;
@@ -52,6 +52,7 @@ function Details(){
         setOpen={setDialogRateOpen}
         handleCloseRateDialog={handleCloseDialog}
         setRateValue={setRateValue}
+        rateValue={rateValue}
         />
         <main 
             className="details" 
