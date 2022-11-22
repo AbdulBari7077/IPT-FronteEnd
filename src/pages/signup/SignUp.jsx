@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SignUpApi } from '../../api/Api';
-import EmailInput from '../../components/Form/EmailInput';
+import EmailInput from '../../components/EmailForm/EmailInput';
 
 import '../Login/style.css';
 
 export default function SignUp() {
-    const HandleSignUp =(event)=>{
+    const HandleSignUp =async (event)=>{
         event.preventDefault();
         const {userName,userEmail , password} = document.forms[0];
-        if(SignUpApi(userName.value,userEmail.value,password.value))
+        const response =await SignUpApi(userName.value,userEmail.value,password.value);
+        // console.log(response,"response");
+        if(response)
         {
            return console.log("SignUp successful");
         }
-        return console.log("SignUp Failed");
+        return console.log("SignUp Failed",response.data.message );
     }
     return (
         <div className="login-body" >
             <div className='login-form'>
                 <h2 className='login-header'>Sign Up </h2>
-                <form  action="" onSubmit={HandleSignUp}>
+                <form  onSubmit={HandleSignUp}>
                 <div className='form-field'>
                         <input className='login-form-input' placeholder='User Name' type="text" name="userName" required />
                     </div>

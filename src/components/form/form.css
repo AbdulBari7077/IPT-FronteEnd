@@ -1,0 +1,14 @@
+.submitbuttondiv{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.submit-button{
+    color: white ;
+    background-color: red;
+    width: 100%;
+    height: 45px;
+    border-radius: 5px;
+    font-size: large;
+}
