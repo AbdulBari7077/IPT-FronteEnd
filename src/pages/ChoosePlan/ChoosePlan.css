@@ -83,7 +83,7 @@
     color: white;
     width: inherit;
 }
-.choose-plan-body-child:hover {
+.choose-plan-body-child:hover{
     height: 105%;
     cursor: pointer;
 }

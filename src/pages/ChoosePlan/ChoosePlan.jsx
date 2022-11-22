@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ChoosePlan.css';
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
 const ChoosePlan = () => {
+    const Plan={
+        "1":'Basic',
+        "2":'Standard',
+        "3":"Premiuim"
+    }
+    const [selectPlan, setSelectPlan] = useState('');
+    function handlePlan(event)
+    {
+        setSelectPlan(Plan[event.currentTarget.id])
+    }
+    function handleSelectPlan()
+    {
+        console.log(selectPlan,"---------------------")
+    }
     return (
         <div className='choose-plan-main-div'>
             <div className='main'>
@@ -37,7 +51,7 @@ const ChoosePlan = () => {
                            </h2>
                         </div>
                     </div>
-                    <div className='choose-plan-body-child'>
+                    <button className='choose-plan-body-child'  id='1' onClick={handlePlan}>
                         <div style={{ color: " rgb(68, 94, 239)" }} className='section' >
                             <h2>BASIC</h2>
                         </div>
@@ -58,8 +72,8 @@ const ChoosePlan = () => {
                             <DoneIcon />
                         </div>
 
-                    </div>
-                    <div className='choose-plan-body-child'>
+                    </button>
+                    <button className='choose-plan-body-child' id='2' onClick={handlePlan}>
                         <div style={{ color: "red" }} className='section' >
                             <h2>STANDARD</h2>
                         </div>
@@ -80,8 +94,8 @@ const ChoosePlan = () => {
                             <DoneIcon />
                         </div>
 
-                    </div>
-                    <div className='choose-plan-body-child'>
+                    </button>
+                    <button className='choose-plan-body-child' id='3' onClick={handlePlan}>
                         <div style={{ color: " blueviolet" }} className='section' >
                             <h2>PREMIUIM</h2>
                         </div>
@@ -102,7 +116,7 @@ const ChoosePlan = () => {
                             <DoneIcon />
                         </div>
 
-                    </div>
+                    </button>
                     <div className='choose-plan-body-child-leftright'>
                         <div className=' section' style={{ color: 'white' }}>
                            <h2>
@@ -127,7 +141,15 @@ const ChoosePlan = () => {
                     </div>
                 </div>
                 <div className='choose-plan-footer'>
-                    <button className='button-footer'> Choose your plan</button>
+                    {
+                        selectPlan?
+                        <button className='button-footer' onClick={handleSelectPlan}>
+                            {`Proceed with ${selectPlan}`}
+                        </button>
+                        :
+                        ''
+                    }
+
                 </div>
             </div>
 
