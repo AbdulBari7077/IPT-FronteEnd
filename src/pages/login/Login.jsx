@@ -6,13 +6,21 @@ import EmailInput from '../../components/EmailForm/EmailInput';
 
 import './style.css';
 export default function Login() {
-    // const navigate = useNavigate();
-    const HandleLogin =(event)=>{
+    const navigate = useNavigate();
+    const HandleLogin =async (event)=>{
         event.preventDefault();
         const {userEmail , password} = document.forms[0];
-        if(LoginApi(userEmail.value,password.value))
+        const response = await LoginApi(userEmail.value,password.value);
+        if(response)
         {
-           return console.log("Login successful");
+            console.log("Login successful");
+            const userData={ 
+                "uid": response.data.uid,
+                "token":response.data.token
+            }
+            localStorage.setItem('userData', JSON.stringify(userData));
+            // console.log("USERDATA: " ,localStorage.getItem('userData'))
+            return navigate('/home');
         }
         return console.log("Login Failed");
     }

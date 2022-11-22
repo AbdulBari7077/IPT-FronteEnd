@@ -9,11 +9,13 @@ export default function SignUp() {
     const HandleSignUp =async (event)=>{
         event.preventDefault();
         const {userName,userEmail , password} = document.forms[0];
-        if(await SignUpApi(userName.value,userEmail.value,password.value))
+        const response =await SignUpApi(userName.value,userEmail.value,password.value);
+        // console.log(response,"response");
+        if(response)
         {
            return console.log("SignUp successful");
         }
-        return console.log("SignUp Failed");
+        return console.log("SignUp Failed",response.data.message );
     }
     return (
         <div className="login-body" >

@@ -3,17 +3,16 @@ const BASE_URL = "https://localhost:44318"
 
 export const LoginApi = async (userEmail, password) => {
     try {
-        await axios.post(`${BASE_URL}/user/login`, {
+        const response=await  axios.post(`${BASE_URL}/user/login`, {
             Email: userEmail,
             Password: password
         })
-        .then(function (response) {
-            console.log(response);
-            return true;
-        })
-        .catch(function (error) {
-            throw (error)
-        });
+        if(response.status === 200) 
+        {
+            // console.log(response);
+            return response;
+        }
+        throw(error)
     }
     catch (err) {
         console.log(err);
@@ -28,10 +27,10 @@ export const SignUpApi = async (userName, userEmail, password) => {
             Email: userEmail,
             Password: password
         })
-        if(response)
+        if(response.status === 200)
         {
-            console.log(response);
-            return true;
+            // console.log(response);
+            return response;
         }
         throw (error)
     }
