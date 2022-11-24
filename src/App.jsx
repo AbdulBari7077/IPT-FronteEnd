@@ -9,6 +9,7 @@ import Login from './pages/Login/Login';
 import SignUp from './pages/SignUp/SignUp';
 import ChoosePlan from './pages/ChoosePlan/ChoosePlan';
 import CreditCard from './pages/CreditCard/CreditCard';
+import ManageProfile from './pages/ManageProfile/ManageProfile';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/register"  element={<SignUp/>} />
                 <Route path="/choosePlan"  element={<ChoosePlan/>} />
                 <Route path="/creditCard"  element={<CreditCard/>} forceRefresh={true}/>
+                <Route path="/manageProfile"  element={<ManageProfile/>} />
             </Routes >        
         </BrowserRouter>
     </div>
