@@ -39,3 +39,11 @@ export const SignUpApi = async (userName, userEmail, password) => {
         return false
     }
 }
+export const getMovieList = async () => {
+    try {
+       
+    }
+    catch (err) {
+       
+    }
+}

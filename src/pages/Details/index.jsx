@@ -7,10 +7,11 @@ import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 import iconAmazon from '../../assets/icon-amazon.png';
 import iconNetflix from '../../assets/icon-netflix.png';
 import './styles.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import RateDialog from '../../components/rateMovie';
 
 function Details(){
+    const navigate = useNavigate();
     const { id, type } = useParams();
     const [movieDetails, setMovieDetails] = useState({});
     const [trailerVideo, setTrailerVideo] = useState([]);
@@ -62,7 +63,7 @@ function Details(){
                 backgroundImage: `url(https://image.tmdb.org/t/p/original/${movieDetails.backdrop_path})`
             }}
             >   
-        <Link to="/home" className="details--backbutton">Back</Link>
+        <button onClick={() => navigate(-1)} className="details--backbutton">Back</button>
             <section> 
                 <div>
                     <div className="details--info">
