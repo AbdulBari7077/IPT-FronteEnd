@@ -10,18 +10,21 @@ export default function Login() {
         event.preventDefault();
         const {userEmail , password} = document.forms[0];
         const response = await LoginApi(userEmail.value,password.value);
-        if(response)
+        console.log(response,"REsponse");
+        if(await response.data.uid)
         {
             console.log("Login successful");
             const userData={ 
                 "uid": response.data.uid,
-                "token":response.data.token
+                "token":response.data.token,
             }
             localStorage.setItem('userData', JSON.stringify(userData));
-            // console.log("USERDATA: " ,localStorage.getItem('userData'))
-            return navigate('/home');
+            return navigate('/choosePlan');
         }
-        return console.log("Login Failed");
+        else{
+            alert(response.data.message);
+            return console.log("Login Failed");
+        }
     }
     return (
         <div className="login-body">

@@ -7,12 +7,13 @@ export const LoginApi = async (userEmail, password) => {
             Email: userEmail,
             Password: password
         })
-        if(response.status === 200) 
-        {
-            // console.log(response);
-            return response;
-        }
-        throw(error)
+        return response;
+        // if(response.status.code === 200) 
+        // {
+        //     // console.log(response);
+           
+        // }
+        // throw(error)
     }
     catch (err) {
         console.log(err);
@@ -27,16 +28,45 @@ export const SignUpApi = async (userName, userEmail, password) => {
             Email: userEmail,
             Password: password
         })
-        if(response.status === 200)
-        {
-            // console.log(response);
-            return response;
-        }
-        throw (error)
+        return response;
+        // if(response.data?.code === 200)
+        // {
+        //     return true;
+        // }
+        // throw (response)
     }
     catch (err) {
         console.log(err);
-        return false
+        return err
+    }
+}
+export const verifyEmail =async (uid,token)=>{
+    try {
+        // console.log(`Bearer ${token}`)
+        const response =await axios.get(`${BASE_URL}/user/sendVerificationEmail?uid=${uid}`,{
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        });
+        return await response;
+    }
+    catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+export const checkVerification =async (uid,token)=>{
+    try {
+        const response =await axios.get(`${BASE_URL}/user/checkVerification?uid=${uid}`,{
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        });
+        return await response;
+    }
+    catch (err) {
+        console.log(err);
+        return err;
     }
 }
 export const getMovieList = async () => {

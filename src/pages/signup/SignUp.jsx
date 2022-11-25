@@ -10,12 +10,16 @@ export default function SignUp() {
         event.preventDefault();
         const {userName,userEmail , password} = document.forms[0];
         const response =await SignUpApi(userName.value,userEmail.value,password.value);
-        // console.log(response,"response");
-        if(response)
+        console.log(response,"response");
+        if(response.data.code==200)
         {
-           return console.log("SignUp successful");
+            console.log("SignUp successful");
         }
-        return console.log("SignUp Failed",response.data.message );
+        else{
+            console.log("SignUp Failed",response.data.message );
+        }
+        alert(await response.data.message);
+        return;
     }
     return (
         <div className="login-body" >
