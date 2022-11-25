@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import 'react-toastify/dist/ReactToastify.css';
 import {BrowserRouter, Routes , Route} from 'react-router-dom';
 import Home from './pages/Home';
 import Details from './pages/Details';
@@ -10,6 +11,7 @@ import SignUp from './pages/SignUp/SignUp';
 import ChoosePlan from './pages/ChoosePlan/ChoosePlan';
 import CreditCard from './pages/CreditCard/CreditCard';
 import ManageProfile from './pages/ManageProfile/ManageProfile';
+import ForgetPassword from './ForgetPassword/ForgetPassword';
 
 
 function App() {
@@ -28,6 +30,7 @@ function App() {
                 <Route path="/choosePlan"  element={<ChoosePlan/>} />
                 <Route path="/creditCard"  element={<CreditCard/>} forceRefresh={true}/>
                 <Route path="/manageProfile"  element={<ManageProfile/>} />
+                <Route path="/forgetPassword"  element={<ForgetPassword/>} />
             </Routes >        
         </BrowserRouter>
     </div>

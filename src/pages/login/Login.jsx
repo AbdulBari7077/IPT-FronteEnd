@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { LoginApi } from '../../api/Api';
 import EmailInput from '../../components/EmailForm/EmailInput';
-
-
 import './style.css';
+
 export default function Login() {
     const navigate = useNavigate();
     const HandleLogin =async (event)=>{
@@ -38,7 +37,7 @@ export default function Login() {
                 <div className='login-footer'>
                     <p>New to Netflix ? <Link to="/register">Sign Up </Link>Now.</p>
                     <p>Back to <Link to="/">Homepage</Link></p>
-                    <p>Forget Password ? <Link to="/">Reset Now</Link></p>
+                    <p>Forget Password ? <Link to="/forgetPassword">Reset Now</Link></p>
                 </div>
                
             </div>
