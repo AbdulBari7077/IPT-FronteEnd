@@ -6,7 +6,7 @@ import './ForgetPassword.css'
 
 const ForgetPassword = () => {
     const [formSubmitted, setformSubmitted] = useState(false);
-    const HandleLogin = async (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         setformSubmitted(true)
         const { userEmail } = document.forms[0];
@@ -22,7 +22,7 @@ const ForgetPassword = () => {
             <ToastContainer />
             <div className='login-form'>
                 <h2 className='login-header'>Reset Password Confirmation</h2>
-                <form onSubmit={HandleLogin}>
+                <form onSubmit={handleSubmit}>
                     <div className='form-field'>
                         <input  className='login-form-input' placeholder='Confirm Email Address' type="text" name="userEmail"  required />
                     </div>
