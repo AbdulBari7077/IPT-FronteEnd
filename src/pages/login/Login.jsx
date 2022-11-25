@@ -36,9 +36,11 @@ export default function Login() {
                     <button className="signin-button" type="submit" >Sign In</button>
                 </form>
                 <div className='login-footer'>
-                    <p>New to Netflix?<Link to="/register">Sign Up </Link>Now.</p>
+                    <p>New to Netflix ? <Link to="/register">Sign Up </Link>Now.</p>
                     <p>Back to <Link to="/">Homepage</Link></p>
+                    <p>Forget Password ? <Link to="/">Reset Now</Link></p>
                 </div>
+               
             </div>
         </div>
     )
