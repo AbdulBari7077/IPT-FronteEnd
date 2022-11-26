@@ -1,8 +1,8 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import CForm from '../../components/form';
 import Card from '../../components/card';
 import './CreditCard.scss';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const initialState = {
     cardNumber: '#### #### #### ####',
@@ -14,12 +14,23 @@ const initialState = {
 };
 
 const CreditCard = () => {
+    const { selectPlan } =useParams();
     const navigate = useNavigate();
     const [state, setState] = useState(initialState);
-    function onHandleForm(){
+    async function onHandleForm(event){
+        event.preventDefault();
         alert("do you want to continue");
         console.log(state,"State");
-        navigate("/home");
+        // const userData = localStorage.getItem('userData');
+        // const response =await buySubscription(selectPlan,userData.uid,userData.token);
+        // if(response.data.code === 200){
+        //     return navigate("/home");
+        // }
+        // else{
+        //     alert(respose.data.message);
+        //     return navigate("/creditCard");
+        // }
+        return navigate("/home");
         
     }
     const [currentFocusedElm, setCurrentFocusedElm] = useState(null);
@@ -60,10 +71,10 @@ const CreditCard = () => {
     let onCardInputBlur = useCallback(() => {
         setCurrentFocusedElm(null);
     }, []);
-
     return (
         <div className="wrapper">
             <CForm
+                selectPlan={selectPlan}
                 onHandleForm={onHandleForm}
                 cardMonth={state.cardMonth}
                 cardYear={state.cardYear}

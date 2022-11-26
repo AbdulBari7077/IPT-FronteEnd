@@ -11,7 +11,7 @@ export default function Login() {
         const {userEmail , password} = document.forms[0];
         const response = await LoginApi(userEmail.value,password.value);
         console.log(response,"REsponse");
-        if(await response.data.uid)
+        if(response.data.uid)
         {
             console.log("Login successful");
             const userData={ 
@@ -19,6 +19,8 @@ export default function Login() {
                 "token":response.data.token,
             }
             localStorage.setItem('userData', JSON.stringify(userData));
+            // const isSubscribed = await checkUserSubscribed(response.data.uid,response.data.token);
+            // return isSubscribed.data.message?navigate('/home'):navigate('/choosePlan');
             return navigate('/choosePlan');
         }
         else{
@@ -26,6 +28,19 @@ export default function Login() {
             return console.log("Login Failed");
         }
     }
+    useEffect(() => {
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        if(!userData){
+            return navigate('/login');
+        }
+        else
+        {
+            // const isSubscribed = await checkUserSubscribed(userData.uid,userData.token);
+            // return isSubscribed.data.message?navigate('/home'):navigate('/choosePlan');
+            return navigate('/choosePlan');
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     return (
         <div className="login-body">
             <div className='login-form'>

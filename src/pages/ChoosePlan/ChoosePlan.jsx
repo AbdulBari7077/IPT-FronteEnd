@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './ChoosePlan.css';
 import {  useNavigate } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close';
@@ -31,9 +31,21 @@ const ChoosePlan = () => {
             console.log(response,"RESPONSE");
             alert(await response.data.message)
         }
-        return navigate('/creditCard');
+        return navigate(`/creditCard/${selectPlan}`);
         // console.log(selectPlan,"---------------------")
     }
+    useEffect(() => {
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        if(!userData){
+            return navigate('/login');
+        }
+        else
+        {
+            // const isSubscribed = await checkUserSubscribed(userData.uid,userData.token);
+            // return isSubscribed.data.message?navigate('/home'):navigate('/choosePlan');
+            return navigate('/choosePlan');
+        }
+    }, []);
     return (
         <div className='choose-plan-main-div'>
             <div className='main'>

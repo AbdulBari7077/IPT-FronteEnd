@@ -69,6 +69,41 @@ export const checkVerification =async (uid,token)=>{
         return err;
     }
 }
+
+export const checkUserSubscribed =async (uid,token)=>{
+    try {
+        const response =await axios.get(`${BASE_URL}/user/checkSubscribed?uid=${uid}`,{
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        });
+        return await response;
+    }
+    catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+export const buySubscription =async (selectPlan,uid,token)=>{
+    try {
+        const response =await axios.post(`${BASE_URL}/user/buySubscription`,
+        {
+           uid,
+           selectPlan,
+        },
+        {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        });
+        return await response;
+    }
+    catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
 export const getMovieList = async () => {
     try {
        
@@ -77,3 +112,4 @@ export const getMovieList = async () => {
        
     }
 }
+

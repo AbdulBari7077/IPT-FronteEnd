@@ -28,7 +28,9 @@ function App() {
                 <Route path="/videoPlayer" element={<VideoPlayer/>} />
                 <Route path="/register"  element={<SignUp/>} />
                 <Route path="/choosePlan"  element={<ChoosePlan/>} />
-                <Route path="/creditCard"  element={<CreditCard/>} forceRefresh={true}/>
+                <Route path="/creditCard"  forceRefresh={true}>
+                  <Route path=":selectPlan" element={<CreditCard/>} />
+                </Route>
                 <Route path="/manageProfile"  element={<ManageProfile/>} />
                 <Route path="/forgetPassword"  element={<ForgetPassword/>} />
             </Routes >        

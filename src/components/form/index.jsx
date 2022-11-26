@@ -9,6 +9,7 @@ const monthsArr = Array.from({ length: 12 }, (x, i) => {
 const yearsArr = Array.from({ length: 9 }, (_x, i) => currentYear + i);
 
 export default function CForm({
+    selectPlan,
     onHandleForm,
     cardMonth,
     cardYear,
@@ -91,6 +92,7 @@ export default function CForm({
                         Card Holder
                     </label>
                     <input
+                        maxLength={28}
                         type="text"
                         className="card-input__input"
                         autoComplete="off"
@@ -177,7 +179,7 @@ export default function CForm({
                     </div>
                 </div>
                 <div className='submitbuttondiv'>
-                    <button type="submit" className='submit-button'> Proceed To Pay</button>
+                    <button type="submit" className='submit-button'> Proceed To Pay {selectPlan}</button>
                 </div>
                 
             </form>
