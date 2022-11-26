@@ -5,9 +5,10 @@ import FeaturedMovie from '../../components/FeaturedMovie';
 import Header from '../../components/Header';
 import './styles.css';
 import Footer from '../Landing/Footer';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
-
+  const navigate = useNavigate();
   const [featuredData, setFeaturedData] = useState(null);
   const [movieList, setMovieList] = useState([]);
   const [blackHeader, setBlackHeader] = useState(false);
@@ -45,7 +46,19 @@ function Home() {
     }
 
   }, []);
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    if(!userData){
+        return navigate('/login');
+    }
+    else
+    {
+        // const isSubscribed = await checkUserSubscribed(userData.uid,userData.token);
+        // return isSubscribed.data.message?navigate('/home'):navigate('/choosePlan');
+        return navigate('/home');
+    }
 
+  }, []);
   return (
     <div className="page">
       

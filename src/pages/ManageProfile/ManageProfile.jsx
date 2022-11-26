@@ -10,13 +10,33 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 const ManageProfile = () => {
     const navigate = useNavigate();
     const [image, setImage] = React.useState('');
+    const [name, setName] = React.useState('ahmed');
+    const [email, setEmail] = React.useState('ahmed@gmail.com');
+    const [maturity, setMaturity] = React.useState('General audiences (G)');
     const [userInfoFlag, setUserInfoFlag] = React.useState(false);
     const [maturityFlag, setMaturityFlag] = React.useState(false);
 
-    const handleChangeImage = (event) => {
-        console.log(event.target.value);
-        setImage(event.target.value);
-    };
+    function handleSave(event) {
+        event.preventDefault();
+        const userUpdatedData = {
+            Name: name,
+            Email: email,
+            ImageURL: image,
+            maturingRating: maturity
+        }
+        console.log(userUpdatedData);
+    }
+    React.useEffect(() => {
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        if (!userData) {
+            return navigate('/login');
+        }
+        else {
+            // const isSubscribed = await checkUserSubscribed(userData.uid,userData.token);
+            // return isSubscribed.data.message?navigate('/home'):navigate('/choosePlan');
+            return navigate('/manageProfile');
+        }
+    }, []);
     return (
         <div className='manageprofilebody'>
             <div className="header--logo">
@@ -47,7 +67,7 @@ const ManageProfile = () => {
                                     id="demo-simple-select"
                                     value={''}
                                     displayEmpty
-                                    onChange={handleChangeImage}
+                                    onChange={(event) => { setImage(event.target.value); }}
                                 >
                                     {/* <MenuItem value="">Select Image </MenuItem> */}
                                     <MenuItem value={'../../../src/assets/Netflix-avatar.png'}><img className='image-dropdown' src="../../../src/assets/Netflix-avatar.png" alt="" /> </MenuItem>
@@ -61,26 +81,26 @@ const ManageProfile = () => {
                             <div className='main-section'>
 
                                 <div className='user-info'>
-                                    ID : dsadsadasdasdasdasdas
+                                    ID : 3213123s12sv3d1265d4623rt3725dv
                                 </div>
                                 {
                                     !userInfoFlag ?
                                         <>
                                             <div className='user-info'>
-                                                Name : ahmed
+                                                Name : {name}
                                             </div>
                                             <div className='user-info'>
-                                                Email : ahmed@gmail.com
+                                                Email : {email}
                                             </div>
                                         </> :
                                         <>
                                             <div className='input-div'>
                                                 <label htmlFor="">Name:</label>
-                                                <input className='input' type="" required />
+                                                <input className='input' value={name} type="" onChange={(event) => { setName(event.target.value) }} />
                                             </div>
                                             <div className='input-div'>
                                                 <label htmlFor="">Email:</label>
-                                                <input className='input' type='email' required />
+                                                <input className='input' value={email} type='email' onChange={(event) => { setEmail(event.target.value) }} />
                                             </div>
                                         </>
                                 }
@@ -103,14 +123,14 @@ const ManageProfile = () => {
                                     !maturityFlag ?
                                         <>
                                             <span className='span-section-2'>
-                                                ALL MATURITY RATINGS
+                                                {maturity}
                                             </span>
                                         </> :
                                         <>
-                                            <ArrowDropDownIcon className='dropdown-icon'/>
-                                            <select className="maturity-select" name='maturity-select'>
-                                                {AgeRatingOptions.map((item)=>{
-                                                    return  <option className='option-select' value={item.value}>{item.label}</option>
+                                            <ArrowDropDownIcon className='dropdown-icon' />
+                                            <select className="maturity-select" name='maturity-select' onChange={(event) => { setMaturity(event.target.value) }}>
+                                                {AgeRatingOptions.map((item) => {
+                                                    return <option className='option-select' value={item.label}>{item.label}</option>
                                                 })}
                                             </select>
                                         </>
@@ -130,9 +150,9 @@ const ManageProfile = () => {
                             </h2>
                             <div className='section-3'>
 
-                                <button className='button-section-3'>
-                                    <Link to="/forgetPassword" style={{ color: " rgb(173, 168, 168)" }}>RESET PASSWORD</Link>
-                                </button>
+                                <a href="/forgetPassword" className='button-section-3'>
+                                    RESET PASSWORD
+                                </a>
                                 <p className='p-section-2'>
                                     If you forgot the password or want to reset your password
                                 </p>
@@ -141,10 +161,10 @@ const ManageProfile = () => {
                         <hr style={{ marginTop: "20px" }} />
                         <div className='section-2'>
                             <div className='section-last'>
-                                <button className='button-section-3'>
+                                <button className='button-section-3' onClick={handleSave}>
                                     SAVE
                                 </button>
-                                <button className='button-section-3'>
+                                <button className='button-section-3' onClick={() => { window.location.reload(false); }}>
                                     CANCEL
                                 </button>
                                 <button href="/forgetPassword" className='button-section-3'>
