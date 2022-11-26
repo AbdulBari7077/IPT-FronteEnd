@@ -4,19 +4,19 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Link, useNavigate } from 'react-router-dom';
+import { AgeRatingOptions } from '../../utils';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 const ManageProfile = () => {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const [image, setImage] = React.useState('');
+    const [userInfoFlag, setUserInfoFlag] = React.useState(false);
+    const [maturityFlag, setMaturityFlag] = React.useState(false);
+
     const handleChangeImage = (event) => {
         console.log(event.target.value);
         setImage(event.target.value);
     };
-    const [userInfo, setUserInfo] = React.useState(false);
-    function handleUserInfoClick(event) {
-        event.preventDefault();
-        setUserInfo(!userInfo);
-    }
     return (
         <div className='manageprofilebody'>
             <div className="header--logo">
@@ -29,7 +29,7 @@ const ManageProfile = () => {
                     <h2 className='heading'>
                         Manage Profile
                     </h2>
-                    <button className='back-button' onClick={()=>{navigate(-1)}} >
+                    <button className='back-button' onClick={() => { navigate(-1) }} >
                         <ArrowBackIosIcon />
                         Back
                     </button>
@@ -42,8 +42,6 @@ const ManageProfile = () => {
                             <img className='image' src={!image ? '../../../src/assets/Netflix-avatar.png' : image} alt="" />
                             <div className='image-selector'>
                                 <Select
-
-                                    labelId="demo-controlled-open-select-label"
                                     className='image-select'
                                     size='small'
                                     id="demo-simple-select"
@@ -61,12 +59,12 @@ const ManageProfile = () => {
                                 </Select>
                             </div>
                             <div className='main-section'>
-                               
+
                                 <div className='user-info'>
                                     ID : dsadsadasdasdasdasdas
                                 </div>
                                 {
-                                    !userInfo ?
+                                    !userInfoFlag ?
                                         <>
                                             <div className='user-info'>
                                                 Name : ahmed
@@ -78,11 +76,11 @@ const ManageProfile = () => {
                                         <>
                                             <div className='input-div'>
                                                 <label htmlFor="">Name:</label>
-                                                <input className='input' type="" required/>
+                                                <input className='input' type="" required />
                                             </div>
                                             <div className='input-div'>
                                                 <label htmlFor="">Email:</label>
-                                                <input className='input' type='email' required/>
+                                                <input className='input' type='email' required />
                                             </div>
                                         </>
                                 }
@@ -91,8 +89,8 @@ const ManageProfile = () => {
                                 </div>
 
                             </div>
-                            <button className='button-section-2' onClick={handleUserInfoClick}>
-                                {!userInfo ? 'EDIT' : 'SAVE'}
+                            <button className='button-section-2' onClick={() => { setUserInfoFlag(!userInfoFlag); }}>
+                                {!userInfoFlag ? 'EDIT' : 'SAVE'}
                             </button>
                         </div>
                         <hr style={{ marginTop: "20px" }} />
@@ -101,14 +99,27 @@ const ManageProfile = () => {
                                 Maturity Settings
                             </h2>
                             <div className='section-2-maturity'>
-                                <span className='span-section-2'>
-                                    ALL MATURITY RATINGS
-                                </span>
+                                {
+                                    !maturityFlag ?
+                                        <>
+                                            <span className='span-section-2'>
+                                                ALL MATURITY RATINGS
+                                            </span>
+                                        </> :
+                                        <>
+                                            <ArrowDropDownIcon className='dropdown-icon'/>
+                                            <select className="maturity-select" name='maturity-select'>
+                                                {AgeRatingOptions.map((item)=>{
+                                                    return  <option className='option-select' value={item.value}>{item.label}</option>
+                                                })}
+                                            </select>
+                                        </>
+                                }
                                 <p className='p-section-2'>
                                     Show titles of all maturity rating for your profile
                                 </p>
-                                <button className='button-section-2'>
-                                    EDIT
+                                <button className='button-section-2' onClick={() => { setMaturityFlag(!maturityFlag) }}>
+                                    {!maturityFlag ? 'EDIT' : 'SAVE'}
                                 </button>
                             </div>
                         </div>
@@ -118,9 +129,9 @@ const ManageProfile = () => {
                                 Account Settings
                             </h2>
                             <div className='section-3'>
-                               
-                                <button  className='button-section-3'>
-                                    <Link to="/forgetPassword" style={{ color:" rgb(173, 168, 168)"}}>RESET PASSWORD</Link>
+
+                                <button className='button-section-3'>
+                                    <Link to="/forgetPassword" style={{ color: " rgb(173, 168, 168)" }}>RESET PASSWORD</Link>
                                 </button>
                                 <p className='p-section-2'>
                                     If you forgot the password or want to reset your password
@@ -130,15 +141,15 @@ const ManageProfile = () => {
                         <hr style={{ marginTop: "20px" }} />
                         <div className='section-2'>
                             <div className='section-last'>
-                                <a className='button-section-3'>
+                                <button className='button-section-3'>
                                     SAVE
-                                </a>
-                                <a className='button-section-3'>
+                                </button>
+                                <button className='button-section-3'>
                                     CANCEL
-                                </a>
-                                <a href="/forgetPassword" className='button-section-3'>
+                                </button>
+                                <button href="/forgetPassword" className='button-section-3'>
                                     DELETE RPOFILE
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>

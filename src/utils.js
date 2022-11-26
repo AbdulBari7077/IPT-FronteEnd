@@ -53,3 +53,11 @@ export const topFilms = [
       year: 1977,
     }
   ]
+
+  export const AgeRatingOptions = [
+    { value: 'G', label: 'General audiences (G) ' },
+    { value: 'PG', label: 'Parental guidance suggested (PG)' },
+    { value: 'PG-13', label: 'Parents strongly cautioned (PG-13)' },
+    { value: 'R', label: 'Restricted Under 17 requires (R)' },
+    { value: 'NC-17', label: 'Adults Only (NC-17)' },
+]
