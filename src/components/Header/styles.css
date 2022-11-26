@@ -123,6 +123,7 @@ header.black {
 } 
 
 .search-autocomplete{
+    margin-top: 6px;
     margin-left: 50px;
 }
 .search-label{

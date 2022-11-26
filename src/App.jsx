@@ -11,7 +11,8 @@ import SignUp from './pages/SignUp/SignUp';
 import ChoosePlan from './pages/ChoosePlan/ChoosePlan';
 import CreditCard from './pages/CreditCard/CreditCard';
 import ManageProfile from './pages/ManageProfile/ManageProfile';
-import ForgetPassword from './ForgetPassword/ForgetPassword';
+import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
+
 
 
 function App() {
