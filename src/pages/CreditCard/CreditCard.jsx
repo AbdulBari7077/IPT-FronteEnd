@@ -3,6 +3,7 @@ import CForm from '../../components/form';
 import Card from '../../components/card';
 import './CreditCard.scss';
 import { useNavigate, useParams } from 'react-router-dom';
+import { addSubscriptionPlan } from '../../api/Api';
 
 const initialState = {
     cardNumber: '#### #### #### ####',
@@ -21,17 +22,15 @@ const CreditCard = () => {
         event.preventDefault();
         alert("do you want to continue");
         console.log(state,"State");
-        // const userData = localStorage.getItem('userData');
-        // const response =await buySubscription(selectPlan,userData.uid,userData.token);
-        // if(response.data.code === 200){
-        //     return navigate("/home");
-        // }
-        // else{
-        //     alert(respose.data.message);
-        //     return navigate("/creditCard");
-        // }
-        return navigate("/home");
-        
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        const responseSubsriptionPlan= await addSubscriptionPlan(userData['uid'],userData['token'],selectPlan);
+        if(responseSubsriptionPlan.data.code === 200){
+            return navigate("/home");
+        }
+        else{
+            alert(responseSubsriptionPlan.data.message);
+            return navigate("/choosePlan");
+        }
     }
     const [currentFocusedElm, setCurrentFocusedElm] = useState(null);
     const updateStateValues = useCallback(

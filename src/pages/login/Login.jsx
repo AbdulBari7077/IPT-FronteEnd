@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { LoginApi } from '../../api/Api';
+import { checkUserSubscribed, LoginApi } from '../../api/Api';
 import EmailInput from '../../components/EmailForm/EmailInput';
 import './style.css';
 
@@ -19,9 +19,14 @@ export default function Login() {
                 "token":response.data.token,
             }
             localStorage.setItem('userData', JSON.stringify(userData));
+            const isSubscribed = await checkUserSubscribed(userData.uid,userData.token);
+            if(isSubscribed.data.code === 200)
+            {
+                return isSubscribed.data.message?navigate('/home'):navigate('/choosePlan');
+            }
             // const isSubscribed = await checkUserSubscribed(response.data.uid,response.data.token);
             // return isSubscribed.data.message?navigate('/home'):navigate('/choosePlan');
-            return navigate('/choosePlan');
+            // return navigate('/choosePlan');
         }
         else{
             alert(response.data.message);
@@ -29,17 +34,13 @@ export default function Login() {
         }
     }
     useEffect(() => {
-        const userData = JSON.parse(localStorage.getItem('userData'));
-        if(!userData){
-            return navigate('/login');
-        }
-        else
-        {
-            // const isSubscribed = await checkUserSubscribed(userData.uid,userData.token);
-            // return isSubscribed.data.message?navigate('/home'):navigate('/choosePlan');
-            return navigate('/choosePlan');
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        async function fetchData(){
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            if(!userData){
+                return navigate('/login');
+            }
+        };
+        fetchData();
     }, []);
     return (
         <div className="login-body">

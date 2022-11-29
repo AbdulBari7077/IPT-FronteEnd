@@ -72,7 +72,7 @@ export const checkVerification =async (uid,token)=>{
 
 export const checkUserSubscribed =async (uid,token)=>{
     try {
-        const response =await axios.get(`${BASE_URL}/user/checkSubscribed?uid=${uid}`,{
+        const response =await axios.get(`${BASE_URL}/user/getSubscription?uid=${uid}`,{
             headers: {
               'Authorization': `Bearer ${token}`
             }
@@ -84,14 +84,37 @@ export const checkUserSubscribed =async (uid,token)=>{
         return err;
     }
 }
-export const buySubscription =async (selectPlan,uid,token)=>{
+export const addSubscriptionPlan =async (uid,token,selectedPlan)=>{
     try {
-        const response =await axios.post(`${BASE_URL}/user/buySubscription`,
-        {
-           uid,
-           selectPlan,
-        },
-        {
+        const response =await axios.put(`${BASE_URL}/user/AddSubscription?uid=${uid}&subscription=${selectedPlan}`,{
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        });
+        return await response;
+    }
+    catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+export const getUserData =async (uid,token)=>{
+    try {
+        const response =await axios.get(`${BASE_URL}/user/Get?id=${uid}`,{
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        });
+        return await response;
+    }
+    catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+export const resetPassword =async (email,token)=>{
+    try {
+        const response =await axios.get(`${BASE_URL}/user/ResetPassword?email=${email}`,{
             headers: {
               'Authorization': `Bearer ${token}`
             }
@@ -104,12 +127,19 @@ export const buySubscription =async (selectPlan,uid,token)=>{
     }
 }
 
-export const getMovieList = async () => {
+export const EditProfile =async (data,token)=>{
     try {
-       
+        const response =await axios.put(`${BASE_URL}/user/update`,{
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        },{
+            data
+        });
+        return await response;
     }
     catch (err) {
-       
+        console.log(err);
+        return err;
     }
 }
-

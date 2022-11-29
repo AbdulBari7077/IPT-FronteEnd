@@ -6,25 +6,52 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Link, useNavigate } from 'react-router-dom';
 import { AgeRatingOptions } from '../../utils';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { EditProfile, getUserData } from '../../api/Api';
+import { ToastContainer, toast } from 'react-toastify';
 
 const ManageProfile = () => {
     const navigate = useNavigate();
     const [image, setImage] = React.useState('');
-    const [name, setName] = React.useState('ahmed');
-    const [email, setEmail] = React.useState('ahmed@gmail.com');
+    const [subscription, setsubscription] = React.useState();
+    const [Id, setId] = React.useState();
+    const [name, setName] = React.useState();
+    const [email, setEmail] = React.useState();
     const [maturity, setMaturity] = React.useState('General audiences (G)');
     const [userInfoFlag, setUserInfoFlag] = React.useState(false);
     const [maturityFlag, setMaturityFlag] = React.useState(false);
-
-    function handleSave(event) {
+    
+    async function handleSave(event) {
         event.preventDefault();
         const userUpdatedData = {
+            UserId:Id,
             Name: name,
             Email: email,
-            ImageURL: image,
-            maturingRating: maturity
+            Avatar: image,
+            Restriction: maturity,
+            Subscription:subscription,
         }
         console.log(userUpdatedData);
+        const response = await EditProfile(userUpdatedData,userData.toke);
+        if(response.data.code ===200)
+        {
+            toast.success(response.data.message, {
+                position: toast.POSITION.TOP_RIGHT,
+                classNames:'toster'
+            })
+        }
+        else{
+            toast.error(response.data.message, {
+                position: toast.POSITION.TOP_RIGHT,
+                classNames:'toster'
+            })
+        }
+
+    }
+    function handleResetPassword(event)
+    {
+        event.preventDefault();
+        navigate(`/forgetPassword/${email}`);
+
     }
     React.useEffect(() => {
         const userData = JSON.parse(localStorage.getItem('userData'));
@@ -32,13 +59,22 @@ const ManageProfile = () => {
             return navigate('/login');
         }
         else {
-            // const isSubscribed = await checkUserSubscribed(userData.uid,userData.token);
+            (async ()=>{
+                const getUserDataResponse = await getUserData(userData.uid,userData.token);
+                console.log(getUserDataResponse.data)
+                setId(getUserDataResponse.data.UserId)
+                setEmail(getUserDataResponse.data.Email)
+                setName(getUserDataResponse.data.Name)
+                setsubscription(getUserDataResponse.data.Subscription)
+            })();
+           
             // return isSubscribed.data.message?navigate('/home'):navigate('/choosePlan');
             return navigate('/manageProfile');
         }
     }, []);
     return (
         <div className='manageprofilebody'>
+            <ToastContainer />
             <div className="header--logo">
                 <a href="/">
                     <img alt="Netflix" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/1280px-Netflix_2015_logo.svg.png" />
@@ -81,7 +117,7 @@ const ManageProfile = () => {
                             <div className='main-section'>
 
                                 <div className='user-info'>
-                                    ID : 3213123s12sv3d1265d4623rt3725dv
+                                    ID : {Id}
                                 </div>
                                 {
                                     !userInfoFlag ?
@@ -105,7 +141,7 @@ const ManageProfile = () => {
                                         </>
                                 }
                                 <div className='user-info'>
-                                    Subscription : Basic
+                                    Subscription : {subscription}
                                 </div>
 
                             </div>
@@ -129,8 +165,8 @@ const ManageProfile = () => {
                                         <>
                                             <ArrowDropDownIcon className='dropdown-icon' />
                                             <select className="maturity-select" name='maturity-select' onChange={(event) => { setMaturity(event.target.value) }}>
-                                                {AgeRatingOptions.map((item) => {
-                                                    return <option className='option-select' value={item.label}>{item.label}</option>
+                                                {AgeRatingOptions.map((item,index) => {
+                                                    return <option key={index} className='option-select' value={item.label}>{item.label}</option>
                                                 })}
                                             </select>
                                         </>
@@ -150,9 +186,9 @@ const ManageProfile = () => {
                             </h2>
                             <div className='section-3'>
 
-                                <a href="/forgetPassword" className='button-section-3'>
+                                <button  className='button-section-3' onClick={handleResetPassword}>
                                     RESET PASSWORD
-                                </a>
+                                </button>
                                 <p className='p-section-2'>
                                     If you forgot the password or want to reset your password
                                 </p>
@@ -168,7 +204,7 @@ const ManageProfile = () => {
                                     CANCEL
                                 </button>
                                 <button href="/forgetPassword" className='button-section-3'>
-                                    DELETE RPOFILE
+                                    DELETE PROFILE
                                 </button>
                             </div>
                         </div>

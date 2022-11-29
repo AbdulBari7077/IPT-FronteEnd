@@ -33,7 +33,7 @@ function App() {
                   <Route path=":selectPlan" element={<CreditCard/>} />
                 </Route>
                 <Route path="/manageProfile"  element={<ManageProfile/>} />
-                <Route path="/forgetPassword"  element={<ForgetPassword/>} />
+                <Route path="/forgetPassword/:email"  element={<ForgetPassword/>} />
             </Routes >        
         </BrowserRouter>
     </div>
