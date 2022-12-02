@@ -24,14 +24,18 @@ const ChoosePlan = () => {
         {
             // console.log(userData['token'])
             const response=await verifyEmail(userData['uid'],userData['token']);
-            // if(response.code === 200)
-            // {
-            //     console.log(response,"RESPONSE");
-            // }
-            console.log(response,"RESPONSE");
+            if(response.data.code === 200)
+            {
+                console.log(response,"RESPONSE CHOOSE PLAN ");
+                
+            }
             alert(await response.data.message)
+            return navigate('/choosePlan');
         }
-        return navigate(`/creditCard/${selectPlan}`);
+        else{
+            return navigate(`/creditCard/${selectPlan}`);
+        }
+        // return navigate(`/creditCard/${selectPlan}`);
         // console.log(selectPlan,"---------------------")
     }
     useEffect(() => {

@@ -20,9 +20,16 @@ export default function Login() {
             }
             localStorage.setItem('userData', JSON.stringify(userData));
             const isSubscribed = await checkUserSubscribed(userData.uid,userData.token);
-            if(isSubscribed.data.code === 200)
+            if(isSubscribed.data.code === 200 )
             {
-                return isSubscribed.data.message?navigate('/home'):navigate('/choosePlan');
+                if(response.data.isVerified && isSubscribed.data.message)
+                {
+                    return navigate('/home');
+                }
+                else{
+                    return navigate('/choosePlan');
+                }
+                // return isSubscribed.data.message?navigate('/home'):navigate('/choosePlan');
             }
             // const isSubscribed = await checkUserSubscribed(response.data.uid,response.data.token);
             // return isSubscribed.data.message?navigate('/home'):navigate('/choosePlan');

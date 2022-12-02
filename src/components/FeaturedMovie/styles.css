@@ -121,3 +121,30 @@
         font-size: 14px;
     }
 }
+/* aside{
+    z-index: 1000;
+    position: absolute;
+}
+.details aside{
+   
+    width: 500px;
+    height: 300px;
+    position: fixed;
+    bottom: 15%;
+    right: 5%;
+  }
+  
+.details aside div {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 6px;
+}
+.video--fullscreen iframe{
+
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: 0;
+} */

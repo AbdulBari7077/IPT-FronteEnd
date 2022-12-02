@@ -6,6 +6,7 @@ import Header from '../../components/Header';
 import './styles.css';
 import Footer from '../Landing/Footer';
 import { useNavigate } from 'react-router-dom';
+import { checkVerification, getMovies, getRandomMovie } from '../../api/Api';
 
 function Home() {
   const navigate = useNavigate();
@@ -14,7 +15,11 @@ function Home() {
   const [blackHeader, setBlackHeader] = useState(false);
 
   useEffect(() => {
+    
     const loadAll = async () => {
+      const movies= await getMovies();
+
+      console.log("GET MOVIES",movies.data.data);
       let list = await Tmdb.getHomeList();
       setMovieList(list);
 
@@ -22,11 +27,33 @@ function Home() {
       let randomChosen = Math.floor(Math.random() * (originals[0].items.results.length - 1));
       let movieChosen = originals[0].items.results[randomChosen];
       
-      let movieChosenData = await Tmdb.getMovieInfo(movieChosen.id, 'tv');
-      setFeaturedData(movieChosenData);
+      // let movieChosenData = await Tmdb.getMovieInfo(movieChosen.id, 'tv');
+      let movieChosenData = await getRandomMovie();
+      if(movieChosenData.data.status){
+        console.log(movieChosenData.data.data.Movies,"movieChosenData")
+        setFeaturedData(movieChosenData.data.data.Movies);
+      }
     }
-
     loadAll();
+
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    let isVerified=null;
+    async function fetchData() {
+      isVerified=await checkVerification(userData['uid'],userData['token']);
+      if(!isVerified?.data?.message)
+      {
+        alert("Verify your Email First")
+        return navigate('/choosePlan');
+      }
+    }
+    fetchData();
+    if(!userData){
+        return navigate('/login');
+    }
+    else
+    {
+      return navigate('/home');
+    }
   }, []);
 
   useEffect(() => {
@@ -44,21 +71,8 @@ function Home() {
     return () => {
       window.removeEventListener('scroll', scrollListener);
     }
-
   }, []);
-  useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem('userData'));
-    if(!userData){
-        return navigate('/login');
-    }
-    else
-    {
-        // const isSubscribed = await checkUserSubscribed(userData.uid,userData.token);
-        // return isSubscribed.data.message?navigate('/home'):navigate('/choosePlan');
-        return navigate('/home');
-    }
 
-  }, []);
   return (
     <div className="page">
       

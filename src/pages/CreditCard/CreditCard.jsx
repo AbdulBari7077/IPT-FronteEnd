@@ -19,6 +19,13 @@ const CreditCard = () => {
     const navigate = useNavigate();
     const [state, setState] = useState(initialState);
     async function onHandleForm(event){
+        // const isVerified=await checkVerification(userData['uid'],userData['token']);
+        // if(!isVerified.data.message)
+        // {
+        //     // const response=await verifyEmail(userData['uid'],userData['token']);
+        //     // alert("PLZ VERIFT FIRST "+await response.data.message);
+        //     return navigate("/choosePlan");
+        // }
         event.preventDefault();
         alert("do you want to continue");
         console.log(state,"State");
