@@ -189,3 +189,33 @@ export const getMovies =async ()=>{
         return false
     }
 }
+export const getAllMovies = async () => {
+    try {
+        const userToken = JSON.parse(localStorage.getItem('userData'))['token'];
+        const response = await axios.get(`${BASE_URL}/Movie/getallMovies`, {
+            headers: {
+                'Authorization': `Bearer ${userToken}`
+            }
+        })
+        return response;
+    }
+    catch (err) {
+        console.log(err);
+        return false
+    }
+}
+export const getMovieByGenre = async (genre) => {
+    try {
+        const userToken = JSON.parse(localStorage.getItem('userData'))['token'];
+        const response = await axios.get(`${BASE_URL}/Movie/GetByGenre?genre=${genre}`, {
+            headers: {
+                'Authorization': `Bearer ${userToken}`
+            }
+        })
+        return response;
+    }
+    catch (err) {
+        console.log(err);
+        return false
+    }
+}

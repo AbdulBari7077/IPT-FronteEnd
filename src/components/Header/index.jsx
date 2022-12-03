@@ -1,30 +1,66 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles.css';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { GenreOptions, topFilms } from '../../utils';
 import { Link, useNavigate } from 'react-router-dom';
+import { getAllMovies, getMovieByGenre } from '../../api/Api';
 
 function Header({ black }) {
   const navigate = useNavigate();
   const [movieValue, setMovieValue] = useState('');
   const [genereValue, setGenereValue] = useState('');
+  const [movieDropDown, setMovieDropDown] = useState([]);
 
 
-  function handleLogout(){
+  function handleLogout() {
     localStorage.clear();
     navigate('/login');
 
   }
-  function handleDropdownMovie(event,newValue) {
+  function handleDropdownMovie(event, newValue) {
     setMovieValue(newValue);
-    console.log(newValue)
+    // console.log(newValue, "DROPDOWN")
   }
-  function handleDropdownGenere(event,newValue) {
+  function handleDropdownGenere(event, newValue) {
     setGenereValue(newValue);
-    console.log(newValue)
+    // console.log(newValue, "DROPDOWN")
   }
-  
+  useEffect(() => {
+    let allMovieList = [];
+    if(!genereValue) {
+      (async () => {
+        const movies = await getAllMovies();
+        if (movies.data.status) {
+          (movies.data.data.Movies).map((item, key) => {
+            const obj = { label: item.title ,movieId:item.movieId}
+            allMovieList.push(obj);
+          })
+        }
+      })();
+    }
+    else
+    {
+      setMovieValue('');
+      (async () => {
+        const movies = await getMovieByGenre(genereValue.label);
+        if (movies.data.status) {
+          (movies.data.data.Movies).map((item, key) => {
+            const obj = { label: item.title ,movieId:item.movieId}
+            allMovieList.push(obj);
+          })
+        }
+      })();
+    }
+    setMovieDropDown(allMovieList)
+    console.log("allMovieList", allMovieList)
+  }, [genereValue]);
+  useEffect(() => {
+    if(movieValue)
+    {
+      return navigate(`/details/${movieValue.movieId}`)
+    }
+  }, [movieValue]);
   return (
     <header className={black ? 'black' : ''}>
       <div className='mono-search-header'>
@@ -42,7 +78,7 @@ function Header({ black }) {
             className='search-autocomplete'
             size="small"
             id="controllable-states-demo"
-            options={topFilms}
+            options={movieDropDown}
             sx={{
               '& .MuiTextField-root': { m: 1, width: '300px' },
             }}
@@ -51,16 +87,16 @@ function Header({ black }) {
         </div>
         <div className='header-dropdown'>
           <Autocomplete
-              onChange={handleDropdownGenere}
-              value={genereValue}
-              size="small"
-              id="combo-box-demo"
-              options={GenreOptions}
-              sx={{
-                '& .MuiTextField-root': { m: 1, width: '200px' },
-              }}
-              renderInput={(params) => <TextField color='error' className='search-autocomplete-textfield' {...params} placeholder='Select Genere' />}
-            />
+            onChange={handleDropdownGenere}
+            value={genereValue}
+            size="small"
+            id="combo-box-demo"
+            options={GenreOptions}
+            sx={{
+              '& .MuiTextField-root': { m: 1, width: '200px' },
+            }}
+            renderInput={(params) => <TextField color='error' className='search-autocomplete-textfield' {...params} placeholder='Select Genere' />}
+          />
         </div>
       </div>
       <div className="dropdown">

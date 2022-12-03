@@ -86,17 +86,12 @@ function Home() {
       }
       <section className="lists">
         {
-          // <MovieRow key={"dsadas"} title={ movieList } items={movieList} />
           movieList.map((item , key)=>{
-            // console.log(key,Object.entries(item)[0][0],Object.entries(item)[0][1],"GET MOVIES");
             if(Object.entries(item)[0][1].length>0){
               return <MovieRow key={key} title={ Object.entries(item)[0][0] } items={Object.entries(item)[0][1]} />
             }
            
           })
-          // movieList.map((item, key) => (
-          //   <MovieRow key={key} title={item.title} items={item.items} type={item.type} />
-          // ))
         }
       </section>
 
