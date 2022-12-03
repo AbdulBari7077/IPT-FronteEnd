@@ -55,7 +55,7 @@ function Home() {
         // console.log(userData['uid'],movieChosenData.data.data.Movies?.movieId,userData['token'],"checkFavListResponse")
         setFeaturedData(movieChosenData.data.data.Movies);
         const checkFavListResponse = await checkFavList(userData['uid'],movieChosenData.data.data.Movies?.movieId,userData['token']);
-        console.log(movieChosenData.data.data.Movies?.title,"checkFavListResponse")
+        // console.log(movieChosenData.data.data.Movies?.title,"checkFavListResponse")
         if(checkFavListResponse.data.status){
           return setInFavList(true);
         }
