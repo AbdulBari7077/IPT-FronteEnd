@@ -6,6 +6,7 @@ import './style.css';
 
 export default function Login() {
     const navigate = useNavigate();
+   
     const HandleLogin =async (event)=>{
         event.preventDefault();
         const {userEmail , password} = document.forms[0];
@@ -18,6 +19,7 @@ export default function Login() {
                 "uid": response.data.uid,
                 "token":response.data.token,
             }
+            console.log("USERDATA",userData);
             localStorage.setItem('userData', JSON.stringify(userData));
             const isSubscribed = await checkUserSubscribed(userData.uid,userData.token);
             if(isSubscribed.data.code === 200 )

@@ -219,3 +219,61 @@ export const getMovieByGenre = async (genre) => {
         return false
     }
 }
+export const addToFavlist = async (userId,movieId) => {
+    try {
+        const userToken = JSON.parse(localStorage.getItem('userData'))['token'];
+        const response = await axios.get(`${BASE_URL}/User/AddToFavorites?uid=${userId}&movie=${movieId}`, {
+            headers: {
+                'Authorization': `Bearer ${userToken}`
+            }
+        })
+        return response;
+    }
+    catch (err) {
+        console.log(err);
+        return false
+    }
+}
+export const RemoveFromFavlist = async (userId,movieId) => {
+    try {
+        const userToken = JSON.parse(localStorage.getItem('userData'))['token'];
+        const response = await axios.get(`${BASE_URL}/User/RemoveFromFavorites?uid=${userId}&movie=${movieId}`, {
+            headers: {
+                'Authorization': `Bearer ${userToken}`
+            }
+        })
+        return response;
+    }
+    catch (err) {
+        console.log(err);
+        return false
+    }
+}
+export const checkFavList = async (userId,movieId,userToken) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/User/checkisExist?uid=${userId}&movie=${movieId}`, {
+            headers: {
+                'Authorization': `Bearer ${userToken}`
+            }
+        })
+        return response;
+    }
+    catch (err) {
+        console.log(err);
+        return false
+    }
+}
+export const getFavListMovies = async (favListIds) => {
+    try {
+        // console.log(favListIds,"getFavListMovies")
+        const response = await axios.post(`${BASE_URL}/Movie/getFavMovies`,
+        {
+            favListIds
+        })
+        return response;
+    }
+    catch (err) {
+        console.log(err);
+        return false
+    }
+}

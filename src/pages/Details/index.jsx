@@ -7,6 +7,7 @@ import './styles.css';
 import { useNavigate } from 'react-router-dom';
 import RateDialog from '../../components/rateMovie';
 import { getMovieById } from '../../api/Api';
+import AddIcon from '@mui/icons-material/Add';
 
 function Details(){
     const navigate = useNavigate();
@@ -28,7 +29,14 @@ function Details(){
     useEffect(() => {
       console.log(movieDetails,"MOVIE DETAILS")
     }, [movieDetails])
-
+    
+    async function HandleAddFavlist(){
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        const response = await addToFavlist(userData['uid'],item.movieId);
+        if(response) {
+          
+        }
+      }
     const handleCloseDialog = () => {
         setDialogRateOpen(false);
     }
@@ -63,17 +71,18 @@ function Details(){
                         <h3 className={movieDetails.vote_average > 5 ? 'positive' : 'negative'}>{movieDetails.rating * 10 + '%'}</h3>
                         <button className='rate-movie' onClick={()=>{
                             setDialogRateOpen(true)
-                        }}> Rate Movie</button>
+                        }}> Rate Movie
+                        </button>
+                        <a href="/" style={{marginLeft:"20px"}} className="featured--mylistbutton"><div><AddIcon />My List</div></a>
                     </div>
-
                     <h1>{movieDetails.original_title || movieDetails.title}</h1>
-
                     <h4>{descriptionVideo}</h4>
                     <span onClick={() => handleShowTrailer()} className="details--viewtrailer">
                         <div className="viewtrailer">
                             <TheatersIcon />watch trailer
                         </div>
                     </span>
+                    
                 </div>
             </section>
             {

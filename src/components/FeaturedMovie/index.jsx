@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles.css';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import AddIcon from '@mui/icons-material/Add';
 import { Link } from 'react-router-dom';
 
-function FeaturedMovie({ item }) {
+import DoneIcon from '@mui/icons-material/Done';
 
+function FeaturedMovie({ item , HandleAddFavlist, inFavList}) {
   let description = item.description.length > 200 ? item.description.substring(0, 200) + '...' : item.description;
+  function handleSubmit(){
+    HandleAddFavlist();
+    // console.log("handleSubmit");
+  }
   return (
     <section
       className="featured"
@@ -29,7 +34,7 @@ function FeaturedMovie({ item }) {
           <div className="featured--description">{description}</div>
           <div className="featured--buttons">
             <Link to={`/details/${item.movieId}`} className="featured--watchbutton"><div><PlayArrowIcon /> Play Now</div></Link>
-            <a href="/" disabled className="featured--mylistbutton"><div><AddIcon />My List</div></a>
+            <button onClick={handleSubmit} className="featured--mylistbutton"><div>{inFavList?<DoneIcon style={{color:"green"}}/>:<AddIcon />}My List</div></button>
           </div>
           <div className="featured--genres"><strong>Genere:</strong> {item.genres.join(', ')}</div>
         </div>

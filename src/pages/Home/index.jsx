@@ -6,39 +6,62 @@ import Header from '../../components/Header';
 import './styles.css';
 import Footer from '../Landing/Footer';
 import { useNavigate } from 'react-router-dom';
-import { checkVerification, getMovies, getRandomMovie } from '../../api/Api';
+import {  addToFavlist, checkFavList, checkVerification, getMovies, getRandomMovie, getUserData, RemoveFromFavlist } from '../../api/Api';
 
+const userData = JSON.parse(localStorage.getItem('userData'));
 function Home() {
   const navigate = useNavigate();
+  const [inFavList, setInFavList] = useState(false);
   const [featuredData, setFeaturedData] = useState(null);
   const [movieList, setMovieList] = useState([]);
   const [blackHeader, setBlackHeader] = useState(false);
+  const [myFavList, setMyFavList] = useState([]);
+  async function HandleAddFavlist(){
+    if(inFavList)
+    {
+      const responseRemoveFromFavList = await RemoveFromFavlist(userData['uid'],featuredData?.movieId);
+      // console.log(responseRemoveFromFavList,"HandleAddFavlist");
+      if(responseRemoveFromFavList.data.code === 200){
+        alert(responseRemoveFromFavList.data.message)
+        return setInFavList(false)
+      }
+
+    }
+    else{
+      const responseAddToFavlist = await addToFavlist(userData['uid'],featuredData?.movieId);
+      // console.log(responseAddToFavlist,"HandleAddFavlist");
+      if(responseAddToFavlist.data.code === 200){
+        alert(responseAddToFavlist.data.message)
+        return setInFavList(true)
+      }
+    }
+  }
+  useEffect(()=>{
+    (async()=>{
+      const getUserFavourits= await getUserData(userData['uid'],userData['token']);
+      setMyFavList(getUserFavourits.data.Favlist);
+      console.log(getUserFavourits.data.Favlist,"getUserFavourits");
+    })();
+  },[inFavList])
+
 
   useEffect(() => {
     
     const loadAll = async () => {
       const movies= await getMovies();
-
-      // console.log("GET MOVIES",movies.data.data);
-     
       setMovieList(movies.data.data);
-      // let list = await Tmdb.getHomeList();
-      // setMovieList(list);
-
-      // let originals = list.filter(i => i.slug === 'originals');
-      // let randomChosen = Math.floor(Math.random() * (originals[0].items.results.length - 1));
-      // let movieChosen = originals[0].items.results[randomChosen];
-      
-      // let movieChosenData = await Tmdb.getMovieInfo(movieChosen.id, 'tv');
       let movieChosenData = await getRandomMovie();
       if(movieChosenData.data.status){
-        // console.log(movieChosenData.data.data.Movies,"movieChosenData")
+        // console.log(userData['uid'],movieChosenData.data.data.Movies?.movieId,userData['token'],"checkFavListResponse")
         setFeaturedData(movieChosenData.data.data.Movies);
+        const checkFavListResponse = await checkFavList(userData['uid'],movieChosenData.data.data.Movies?.movieId,userData['token']);
+        console.log(movieChosenData.data.data.Movies?.title,"checkFavListResponse")
+        if(checkFavListResponse.data.status){
+          return setInFavList(true);
+        }
       }
     }
     loadAll();
-
-    const userData = JSON.parse(localStorage.getItem('userData'));
     let isVerified=null;
     async function fetchData() {
       isVerified=await checkVerification(userData['uid'],userData['token']);
@@ -82,7 +105,7 @@ function Home() {
       <Header black={blackHeader}/>
       {
         featuredData &&
-        <FeaturedMovie item={featuredData}/>
+        <FeaturedMovie item={featuredData} HandleAddFavlist={HandleAddFavlist} inFavList={inFavList}/>
       }
       <section className="lists">
         {
@@ -90,11 +113,14 @@ function Home() {
             if(Object.entries(item)[0][1].length>0){
               return <MovieRow key={key} title={ Object.entries(item)[0][0] } items={Object.entries(item)[0][1]} />
             }
-           
           })
         }
       </section>
-
+      <div>
+        {
+          myFavList.length>0 && <MovieRow key={featuredData?.movieId}  title={ "Fav List" } items={myFavList} />
+        }
+      </div>
       <footer>
         <Footer/>
       </footer>
