@@ -10,7 +10,7 @@ import { getMovieById } from '../../api/Api';
 
 function Details(){
     const navigate = useNavigate();
-    const { id, type } = useParams();
+    const { id } = useParams();
     const [movieDetails, setMovieDetails] = useState({});
     const [urlVideo, setUrlVideo] = useState();
     const [videoFullScreen, setVideoFullScreen] = useState(false);
@@ -24,7 +24,7 @@ function Details(){
             setDescriptionVideo(movie.data.data.Movie.description > 300 ? movie.data.data.Movie.description.substring(0, 300) + '...' : movie.data.data.Movie.description);
         }
         loadAll();
-    }, [id, type,])
+    }, [id])
     useEffect(() => {
       console.log(movieDetails,"MOVIE DETAILS")
     }, [movieDetails])

@@ -19,18 +19,20 @@ function Home() {
     const loadAll = async () => {
       const movies= await getMovies();
 
-      console.log("GET MOVIES",movies.data.data);
-      let list = await Tmdb.getHomeList();
-      setMovieList(list);
+      // console.log("GET MOVIES",movies.data.data);
+     
+      setMovieList(movies.data.data);
+      // let list = await Tmdb.getHomeList();
+      // setMovieList(list);
 
-      let originals = list.filter(i => i.slug === 'originals');
-      let randomChosen = Math.floor(Math.random() * (originals[0].items.results.length - 1));
-      let movieChosen = originals[0].items.results[randomChosen];
+      // let originals = list.filter(i => i.slug === 'originals');
+      // let randomChosen = Math.floor(Math.random() * (originals[0].items.results.length - 1));
+      // let movieChosen = originals[0].items.results[randomChosen];
       
       // let movieChosenData = await Tmdb.getMovieInfo(movieChosen.id, 'tv');
       let movieChosenData = await getRandomMovie();
       if(movieChosenData.data.status){
-        console.log(movieChosenData.data.data.Movies,"movieChosenData")
+        // console.log(movieChosenData.data.data.Movies,"movieChosenData")
         setFeaturedData(movieChosenData.data.data.Movies);
       }
     }
@@ -40,6 +42,7 @@ function Home() {
     let isVerified=null;
     async function fetchData() {
       isVerified=await checkVerification(userData['uid'],userData['token']);
+      // console.log(isVerified,userData,"HOME PAGE ");
       if(!isVerified?.data?.message)
       {
         alert("Verify your Email First")
@@ -83,9 +86,17 @@ function Home() {
       }
       <section className="lists">
         {
-          movieList.map((item, key) => (
-            <MovieRow key={key} title={item.title} items={item.items} type={item.type} />
-          ))
+          // <MovieRow key={"dsadas"} title={ movieList } items={movieList} />
+          movieList.map((item , key)=>{
+            // console.log(key,Object.entries(item)[0][0],Object.entries(item)[0][1],"GET MOVIES");
+            if(Object.entries(item)[0][1].length>0){
+              return <MovieRow key={key} title={ Object.entries(item)[0][0] } items={Object.entries(item)[0][1]} />
+            }
+           
+          })
+          // movieList.map((item, key) => (
+          //   <MovieRow key={key} title={item.title} items={item.items} type={item.type} />
+          // ))
         }
       </section>
 

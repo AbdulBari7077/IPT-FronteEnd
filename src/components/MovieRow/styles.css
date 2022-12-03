@@ -12,6 +12,7 @@
 .movieRow--listarea {
     overflow-x: hidden;
     margin-left: 40px;
+    height: 200px;
 }
 
 .movieRow--list {
@@ -32,13 +33,14 @@
 }
 
 .movieRow--item img:hover {
+    height: 100px;
     transform: scale(1);
 }
 
 .movieRow--left, .movieRow--right {
     position: absolute;
     width: 30px;
-    height: 250px;
+    height: 200px;
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 99;
     display: flex;
