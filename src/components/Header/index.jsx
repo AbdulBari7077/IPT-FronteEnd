@@ -53,7 +53,7 @@ function Header({ black }) {
       })();
     }
     setMovieDropDown(allMovieList)
-    console.log("allMovieList", allMovieList)
+    // console.log("allMovieList", allMovieList)
   }, [genereValue]);
   useEffect(() => {
     if(movieValue)
@@ -71,6 +71,7 @@ function Header({ black }) {
         </div>
         <div>
           <Autocomplete
+            isOptionEqualToValue={(option, value) => option.id === value.id}
             onChange={handleDropdownMovie}
             value={movieValue}
             // inputValue={inputValue}
@@ -87,6 +88,7 @@ function Header({ black }) {
         </div>
         <div className='header-dropdown'>
           <Autocomplete
+            isOptionEqualToValue={(option, value) => option.id === value.id}
             onChange={handleDropdownGenere}
             value={genereValue}
             size="small"
