@@ -4,14 +4,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import {BrowserRouter, Routes , Route} from 'react-router-dom';
 import Home from './pages/Home';
 import Details from './pages/Details';
-import LandingPage from './pages/Landing/LandingPage';
-import VideoPlayer from './pages/VideoPlayer/VideoPlayer';
-import Login from './pages/Login/Login';
-import SignUp from './pages/SignUp/SignUp';
-import ChoosePlan from './pages/ChoosePlan/ChoosePlan';
-import CreditCard from './pages/CreditCard/CreditCard';
-import ManageProfile from './pages/ManageProfile/ManageProfile';
-import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
+import LandingPage from './pages/Landing/LandingPage.jsx';
+import Login from './pages/Login/Login.jsx';
+import SignUp from './pages/SignUp/SignUp.jsx';
+import ChoosePlan from './pages/ChoosePlan/ChoosePlan.jsx';
+import CreditCard from './pages/CreditCard/CreditCard.jsx';
+import ManageProfile from './pages/ManageProfile/ManageProfile.jsx';
+import ForgetPassword from './pages/ForgetPassword/ForgetPassword.jsx';
 
 
 
@@ -26,7 +25,6 @@ function App() {
                 <Route path="/home"  element={ <Home/> } />
                 <Route path="/details/:id"  element={<Details/>} />
                 <Route path="/login" element={<Login/>} />
-                <Route path="/videoPlayer" element={<VideoPlayer/>} />
                 <Route path="/register"  element={<SignUp/>} />
                 <Route path="/choosePlan"  element={<ChoosePlan/>} />
                 <Route path="/creditCard"  forceRefresh={true}>
