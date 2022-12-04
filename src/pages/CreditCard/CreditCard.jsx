@@ -1,8 +1,9 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import CForm from '../../components/form';
 import Card from '../../components/card';
 import './CreditCard.scss';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { addSubscriptionPlan } from '../../api/Api';
 
 const initialState = {
     cardNumber: '#### #### #### ####',
@@ -14,13 +15,29 @@ const initialState = {
 };
 
 const CreditCard = () => {
+    const { selectPlan } =useParams();
     const navigate = useNavigate();
     const [state, setState] = useState(initialState);
-    function onHandleForm(){
+    async function onHandleForm(event){
+        // const isVerified=await checkVerification(userData['uid'],userData['token']);
+        // if(!isVerified.data.message)
+        // {
+        //     // const response=await verifyEmail(userData['uid'],userData['token']);
+        //     // alert("PLZ VERIFT FIRST "+await response.data.message);
+        //     return navigate("/choosePlan");
+        // }
+        event.preventDefault();
         alert("do you want to continue");
         console.log(state,"State");
-        navigate("/home");
-        
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        const responseSubsriptionPlan= await addSubscriptionPlan(userData['uid'],userData['token'],selectPlan);
+        if(responseSubsriptionPlan.data.code === 200){
+            return navigate("/home");
+        }
+        else{
+            alert(responseSubsriptionPlan.data.message);
+            return navigate("/choosePlan");
+        }
     }
     const [currentFocusedElm, setCurrentFocusedElm] = useState(null);
     const updateStateValues = useCallback(
@@ -60,10 +77,10 @@ const CreditCard = () => {
     let onCardInputBlur = useCallback(() => {
         setCurrentFocusedElm(null);
     }, []);
-
     return (
         <div className="wrapper">
             <CForm
+                selectPlan={selectPlan}
                 onHandleForm={onHandleForm}
                 cardMonth={state.cardMonth}
                 cardYear={state.cardYear}

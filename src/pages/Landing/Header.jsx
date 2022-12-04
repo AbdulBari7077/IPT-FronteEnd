@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import NetflixLogo from '../../assets/logo.png';
 import Form from '../../components/subComponents/Form';
 import {Routes, Route, useNavigate} from 'react-router-dom';
 
 const Header = () => {
-  localStorage.clear();
   const navigate = useNavigate();
-  const navigateSignIn = () => {
-    navigate('/login');
-  };
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    // console.log("USERDATA: " ,userData)
+    if(!userData){
+        return navigate('/');
+    }
+    else
+    {
+        // const isSubscribed = await checkUserSubscribed(userData.uid,userData.token);
+        // return isSubscribed.data.message?navigate('/home'):navigate('/choosePlan');
+        return navigate('/home');
+    }
+  }, []);
   return (
     <div className="header-container">
       <header>
         <img className="netflix-logo" src={NetflixLogo} alt="Netflix Logo" />
-        <button className='header-button'  onClick={navigateSignIn}> Sign in</button>
+        <button className='header-button'  onClick={()=>{ navigate('/login');}}> Sign in</button>
       </header>
       <div className="showcase-wrapper">
         <div className="showcase">

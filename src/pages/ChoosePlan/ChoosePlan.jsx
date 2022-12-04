@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './ChoosePlan.css';
+import {  useNavigate } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
+import { checkVerification, verifyEmail } from '../../api/Api';
 const ChoosePlan = () => {
+    const navigate = useNavigate();
     const Plan={
         "1":'Basic',
         "2":'Standard',
@@ -13,10 +16,40 @@ const ChoosePlan = () => {
     {
         setSelectPlan(Plan[event.currentTarget.id])
     }
-    function handleSelectPlan()
+    async function handleSelectPlan()
     {
-        console.log(selectPlan,"---------------------")
+        const userData=JSON.parse(localStorage.getItem('userData'))
+        const isVerified=await checkVerification(userData['uid'],userData['token']);
+        if(!isVerified.data.message)
+        {
+            // console.log(userData['token'])
+            const response=await verifyEmail(userData['uid'],userData['token']);
+            if(response.data.code === 200)
+            {
+                console.log(response,"RESPONSE CHOOSE PLAN ");
+                
+            }
+            alert(await response.data.message)
+            return navigate('/choosePlan');
+        }
+        else{
+            return navigate(`/creditCard/${selectPlan}`);
+        }
+        // return navigate(`/creditCard/${selectPlan}`);
+        // console.log(selectPlan,"---------------------")
     }
+    useEffect(() => {
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        if(!userData){
+            return navigate('/login');
+        }
+        else
+        {
+            // const isSubscribed = await checkUserSubscribed(userData.uid,userData.token);
+            // return isSubscribed.data.message?navigate('/home'):navigate('/choosePlan');
+            return navigate('/choosePlan');
+        }
+    }, []);
     return (
         <div className='choose-plan-main-div'>
             <div className='main'>

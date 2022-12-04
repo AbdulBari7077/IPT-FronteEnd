@@ -1,106 +1,118 @@
 import React, { useEffect, useState } from 'react';
-import Tmdb from '../../Tmdb';
+import DoneIcon from '@mui/icons-material/Done';
 import { useParams } from 'react-router';
 import TheatersIcon from '@mui/icons-material/Theaters';
-import LanguageIcon from '@mui/icons-material/Language';
 import AspectRatioIcon from '@mui/icons-material/AspectRatio';
-import iconAmazon from '../../assets/icon-amazon.png';
-import iconNetflix from '../../assets/icon-netflix.png';
 import './styles.css';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import RateDialog from '../../components/rateMovie';
+import { addToFavlist, checkFavList, getMovieById, RemoveFromFavlist } from '../../api/Api';
+import AddIcon from '@mui/icons-material/Add';
 
-function Details(){
-    const { id, type } = useParams();
+function Details() {
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    const navigate = useNavigate();
+    const { id } = useParams();
     const [movieDetails, setMovieDetails] = useState({});
-    const [trailerVideo, setTrailerVideo] = useState([]);
     const [urlVideo, setUrlVideo] = useState();
     const [videoFullScreen, setVideoFullScreen] = useState(false);
     const [descriptionVideo, setDescriptionVideo] = useState();
-    const [dialogRateOpen, setDialogRateOpen] = React.useState(false);
-    const [rateValue, setRateValue] = React.useState(3);
+    const [dialogRateOpen, setDialogRateOpen] = useState(false);
+    const [rateValue, setRateValue] = useState(3);
+    const [inFavList, setInFavList] = useState(false);
     useEffect(() => {
         const loadAll = async () => {
-            let movie = await Tmdb.getMovieInfo(id, type);
-            let trailer = await Tmdb.getTrailerVideo(id, type)
-            setMovieDetails(movie);
-            setTrailerVideo(trailer);
-            setDescriptionVideo(movie.overview.length > 300 ? movie.overview.substring(0, 300) + '...' : movie.overview);
-            //console.log(movie)
+            const movie = await getMovieById(id);
+            setMovieDetails(movie.data.data.Movie);
+            const checkFavListResponse = await checkFavList(userData['uid'],movie.data.data.Movie?.movieId,userData['token']);
+            if(checkFavListResponse.data.status){
+                setInFavList(true);
+            }
+            setDescriptionVideo(movie.data.data.Movie.description > 300 ? movie.data.data.Movie.description.substring(0, 300) + '...' : movie.data.data.Movie.description);
         }
         loadAll();
-    }, [id, type])
+    }, [id,inFavList])
+
     const handleCloseDialog = () => {
         setDialogRateOpen(false);
-        
-      }
-    function handleShowTrailer(){
-        const trailer = trailerVideo.results;
-        if(trailer !== undefined && trailer.length > 0){
-            const url = `https://youtube.com/embed/${trailer[0].key}?autoplay=1&controls=0&showinfo=0&autohide=1`;
-            setUrlVideo(url);
-        }
     }
-    function handleVideoFullScreen(){
+    function handleShowTrailer() {
+        setUrlVideo(movieDetails.trailerUrl);
+    }
+    function handleVideoFullScreen() {
         setVideoFullScreen(!videoFullScreen);
     }
-    
+    async function HandleAddFavlist() {
+        if (inFavList) {
+            const responseRemoveFromFavList = await RemoveFromFavlist(userData['uid'], movieDetails?.movieId);
+            // console.log(responseRemoveFromFavList,"HandleAddFavlist");
+            if (responseRemoveFromFavList.data.code === 200) {
+                alert(responseRemoveFromFavList.data.message)
+                return setInFavList(false)
+            }
+
+        }
+        else {
+            const responseAddToFavlist = await addToFavlist(userData['uid'], movieDetails?.movieId);
+            // console.log(responseAddToFavlist,"HandleAddFavlist");
+            if (responseAddToFavlist.data.code === 200) {
+                alert(responseAddToFavlist.data.message)
+                return setInFavList(true)
+            }
+        }
+    }
     return (
         <>
-        <RateDialog 
-        open={dialogRateOpen}
-        setOpen={setDialogRateOpen}
-        handleCloseRateDialog={handleCloseDialog}
-        setRateValue={setRateValue}
-        rateValue={rateValue}
-        />
-        <main 
-            className="details" 
-            style={{
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundImage: `url(https://image.tmdb.org/t/p/original/${movieDetails.backdrop_path})`
-            }}
-            >   
-        <Link to="/home" className="details--backbutton">Back</Link>
-            <section> 
-                <div>
-                    <div className="details--info">
-                        <h3 className={movieDetails.vote_average > 5 ? 'positive' : 'negative'}>{movieDetails.vote_average * 10 + '%'}</h3>
-                        <button className='rate-movie' onClick={()=>{
-                            setDialogRateOpen(true)
-                        }}> Rate Movie</button>
-                    </div>
-
-                    <h1>{movieDetails.original_title || movieDetails.original_name}</h1>
-
-                    <h4>{descriptionVideo}</h4>
-
-                    {
-                        (trailerVideo.results !== undefined && trailerVideo.results.length !== 0)
-                        &&
-                            <span onClick={() => handleShowTrailer()} className="details--viewtrailer">
-                                <div className="viewtrailer">
-                                    <TheatersIcon />watch trailer
-                                </div>
-                            </span>
-                    }
-                </div>
-            </section>
-            {
-                urlVideo !== undefined
-                &&
-                <aside className={videoFullScreen ? 'video--fullscreen' : ''}>
+            <RateDialog
+                open={dialogRateOpen}
+                setOpen={setDialogRateOpen}
+                handleCloseRateDialog={handleCloseDialog}
+                setRateValue={setRateValue}
+                rateValue={rateValue}
+            />
+            <main
+                className="details"
+                style={{
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundImage: `url(${movieDetails.posterUrl})`
+                }}
+            >
+                <button onClick={() => navigate(-1)} className="details--backbutton">Back</button>
+                <section>
                     <div>
-                        <button onClick={() => handleVideoFullScreen()}><AspectRatioIcon /></button>
+                        <div className="details--info">
+                            <h3 className={movieDetails.vote_average > 5 ? 'positive' : 'negative'}>{movieDetails.rating * 10 + '%'}</h3>
+                            <button className='rate-movie' onClick={() => {
+                                setDialogRateOpen(true)
+                            }}> Rate Movie
+                            </button>
+                            <button style={{marginLeft:"20px"}} onClick={HandleAddFavlist} className="featured--mylistbutton"><div>{inFavList?<DoneIcon style={{color:"green"}}/>:<AddIcon />}My List</div></button>
+                        </div>
+                        <h1>{movieDetails.original_title || movieDetails.title}</h1>
+                        <h4>{descriptionVideo}</h4>
+                        <span onClick={() => handleShowTrailer()} className="details--viewtrailer">
+                            <div className="viewtrailer">
+                                <TheatersIcon />watch trailer
+                            </div>
+                        </span>
+
                     </div>
-                    <iframe frameBorder="0" height="100%" width="100%" title="1"
-                        src={urlVideo}>
-                    </iframe>
-                </aside>
-            }
-        </main>
-            </>
+                </section>
+                {
+                    urlVideo !== undefined
+                    &&
+                    <aside className={videoFullScreen ? 'video--fullscreen' : ''}>
+                        <div>
+                            <button onClick={() => handleVideoFullScreen()}><AspectRatioIcon /></button>
+                        </div>
+                        <iframe frameBorder="0" height="100%" width="100%" title="1"
+                            src={urlVideo}>
+                        </iframe>
+                    </aside>
+                }
+            </main>
+        </>
     )
 }
 
