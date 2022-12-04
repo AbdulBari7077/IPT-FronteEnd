@@ -5,7 +5,7 @@ import {BrowserRouter, Routes , Route} from 'react-router-dom';
 import Home from './pages/Home';
 import Details from './pages/Details';
 import LandingPage from './pages/Landing/LandingPage.jsx';
-import Login from './pages/Login/Login.jsx';
+import SignIn from './pages/Login/SignIn.jsx';
 import SignUp from './pages/SignUp/SignUp.jsx';
 import ChoosePlan from './pages/ChoosePlan/ChoosePlan.jsx';
 import CreditCard from './pages/CreditCard/CreditCard.jsx';

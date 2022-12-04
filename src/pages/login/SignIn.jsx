@@ -4,7 +4,7 @@ import { checkUserSubscribed, LoginApi } from '../../api/Api';
 import EmailInput from '../../components/EmailForm/EmailInput';
 import './style.css';
 
-export default function Login() {
+export default function SignIn() {
     const navigate = useNavigate();
    
     const HandleLogin =async (event)=>{
