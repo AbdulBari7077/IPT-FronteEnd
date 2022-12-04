@@ -24,7 +24,7 @@ function App() {
                 <Route path="/"  element={<LandingPage/>} />
                 <Route path="/home"  element={ <Home/> } />
                 <Route path="/details/:id"  element={<Details/>} />
-                <Route path="/login" element={<Login/>} />
+                <Route path="/login" element={<SignIn/>} />
                 <Route path="/register"  element={<SignUp/>} />
                 <Route path="/choosePlan"  element={<ChoosePlan/>} />
                 <Route path="/creditCard"  forceRefresh={true}>
