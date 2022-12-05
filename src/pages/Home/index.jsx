@@ -6,7 +6,7 @@ import Header from '../../components/Header';
 import './styles.css';
 import Footer from '../Landing/Footer';
 import { useNavigate } from 'react-router-dom';
-import {  addToFavlist, checkFavList, checkVerification, getMovies, getRandomMovie, getUserData, RemoveFromFavlist } from '../../api/Api';
+import {  addToFavlist, checkFavList, checkVerification, getMovies, getRandomMovie, getRecommendedMovies, getUserData, RemoveFromFavlist } from '../../api/Api';
 
 const userData = JSON.parse(localStorage.getItem('userData'));
 function Home() {
@@ -16,6 +16,7 @@ function Home() {
   const [movieList, setMovieList] = useState([]);
   const [blackHeader, setBlackHeader] = useState(false);
   const [myFavList, setMyFavList] = useState([]);
+  
   async function HandleAddFavlist(){
     if(inFavList)
     {
@@ -49,6 +50,7 @@ function Home() {
     
     const loadAll = async () => {
       const movies= await getMovies();
+      
       setMovieList(movies.data.data);
       let movieChosenData = await getRandomMovie();
       if(movieChosenData.data.status){
@@ -126,7 +128,7 @@ function Home() {
       </footer>
       
       {
-        movieList.length <= 0 &&
+        movieList.length <= 0 && 
         <div className="loading">
           <img alt="Carregando" src="https://media.wired.com/photos/592744d3f3e2356fd800bf00/master/w_2000,c_limit/Netflix_LoadTime.gif"/>
         </div>

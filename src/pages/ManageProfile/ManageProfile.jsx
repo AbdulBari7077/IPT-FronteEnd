@@ -10,6 +10,7 @@ import { EditProfile, getUserData } from '../../api/Api';
 import { ToastContainer, toast } from 'react-toastify';
 
 const ManageProfile = () => {
+    const userData = JSON.parse(localStorage.getItem('userData'));
     const navigate = useNavigate();
     const [image, setImage] = React.useState('');
     const [subscription, setsubscription] = React.useState();
@@ -31,9 +32,11 @@ const ManageProfile = () => {
             Subscription:subscription,
         }
         console.log(userUpdatedData);
-        const response = await EditProfile(userUpdatedData,userData.toke);
-        if(response.data.code ===200)
+        // console.log("USERDATA: ",userData["token"]);
+        const response = await EditProfile(userUpdatedData,userData["token"]);
+        if(response.data.code === 200)
         {
+            console.log(response)
             toast.success(response.data.message, {
                 position: toast.POSITION.TOP_RIGHT,
                 classNames:'toster'
@@ -54,7 +57,7 @@ const ManageProfile = () => {
 
     }
     React.useEffect(() => {
-        const userData = JSON.parse(localStorage.getItem('userData'));
+       
         if (!userData) {
             return navigate('/login');
         }
@@ -85,7 +88,7 @@ const ManageProfile = () => {
                     <h2 className='heading'>
                         Manage Profile
                     </h2>
-                    <button className='back-button' onClick={() => { navigate(-1) }} >
+                    <button className='back-button' onClick={() => { navigate('/home') }} >
                         <ArrowBackIosIcon />
                         Back
                     </button>

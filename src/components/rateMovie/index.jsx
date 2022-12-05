@@ -16,7 +16,6 @@ const RateDialog = (props) => {
   const [value, setValue] = React.useState(rateValue);
 
 
-
   const handleClose = () => {
     setOpen(false);
     handleCloseRateDialog();
@@ -25,7 +24,7 @@ const RateDialog = (props) => {
 
 
   return (
-    <Dialog onClose={handleClose} open={open}>
+    <Dialog onClose={handleClose}  open={open}>
       <DialogContent className='Dialograting' style={{ backgroundColor: '' }}>
         <DialogContentText>
           <ThemeProvider theme={myTheme}>

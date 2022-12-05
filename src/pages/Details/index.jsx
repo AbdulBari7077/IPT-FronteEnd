@@ -6,7 +6,7 @@ import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
 import RateDialog from '../../components/rateMovie';
-import { addToFavlist, checkFavList, getMovieById, RemoveFromFavlist } from '../../api/Api';
+import { addMovieToUserHistory, addToFavlist, checkFavList, getMovieById, getRecommendedMovies, RemoveFromFavlist } from '../../api/Api';
 import AddIcon from '@mui/icons-material/Add';
 
 function Details() {
@@ -20,6 +20,7 @@ function Details() {
     const [dialogRateOpen, setDialogRateOpen] = useState(false);
     const [rateValue, setRateValue] = useState(3);
     const [inFavList, setInFavList] = useState(false);
+    // const [recommendedMovies, setRecommendedMovies] = useState([]);
     useEffect(() => {
         const loadAll = async () => {
             const movie = await getMovieById(id);
@@ -36,9 +37,16 @@ function Details() {
     const handleCloseDialog = () => {
         setDialogRateOpen(false);
     }
-    function handleShowTrailer() {
+    async function handleShowTrailer() {
+        // console.log("movieDetails.movieId",movieDetails.movieId,userData['uid'],userData['token'])
+        // const recommendedMovies = await getRecommendedMovies(movieDetails.movieId);
+        // setRecommendedMovies(recommendedMovies?.data);
+        // console.log(recommendedMovies,"recommendedMovies")
+        // const response = await addMovieToUserHistory(userData['uid'],movieDetails.movieId,userData['token']); 
+        // console.log(response,"handleShowTrailer");
         setUrlVideo(movieDetails.trailerUrl);
     }
+   
     function handleVideoFullScreen() {
         setVideoFullScreen(!videoFullScreen);
     }
@@ -69,6 +77,7 @@ function Details() {
                 handleCloseRateDialog={handleCloseDialog}
                 setRateValue={setRateValue}
                 rateValue={rateValue}
+                onSubmit={rateValue}
             />
             <main
                 className="details"
