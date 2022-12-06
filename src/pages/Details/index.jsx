@@ -39,8 +39,9 @@ function Details() {
     }
     async function handleShowTrailer() {
         const response = await updateRecommendationList(movieDetails.movieId,userData['uid']);
-        console.log("recommendedMovies",response);
         setUrlVideo(movieDetails.trailerUrl);
+        console.log("recommendedMovies",response);
+        
     }
    
     function handleVideoFullScreen() {
