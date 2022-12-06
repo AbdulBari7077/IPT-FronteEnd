@@ -13,7 +13,7 @@ function MovieRow({ title, items }) {
     if(title === "Fav List"){
       (async()=>{
         const response = await getFavListMovies(items);
-        setFavList(response.data.data.Movies);
+        setFavList(response?.data.data.Movies);
       })();
       // console.log(response,"getFavListMovies");
     }

@@ -34,7 +34,7 @@ const ManageProfile = () => {
         console.log(userUpdatedData);
         // console.log("USERDATA: ",userData["token"]);
         const response = await EditProfile(userUpdatedData,userData["token"]);
-        if(response.data.code === 200)
+        if(response?.data.code === 200)
         {
             console.log(response)
             toast.success(response.data.message, {
@@ -69,6 +69,7 @@ const ManageProfile = () => {
                 setEmail(getUserDataResponse.data.Email)
                 setName(getUserDataResponse.data.Name)
                 setsubscription(getUserDataResponse.data.Subscription)
+                setMaturity(getUserDataResponse.data.Restriction)
             })();
            
             // return isSubscribed.data.message?navigate('/home'):navigate('/choosePlan');

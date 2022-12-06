@@ -1,6 +1,5 @@
 
 const BASE_URL = "https://localhost:44318"
-
 export const LoginApi = async (userEmail, password) => {
     try {
         const response=await  axios.post(`${BASE_URL}/user/login`, {
@@ -130,10 +129,8 @@ export const resetPassword =async (email,token)=>{
 
 export const EditProfile =async (data,token)=>{
     try {
-        const response =await axios.post(`${BASE_URL}/user/Update`,
-        {
-            data
-        },
+        console.log(data,"DATA")
+        const response =await axios.post(`${BASE_URL}/user/Update`,data,
         {
             headers: {
               'Authorization': `Bearer ${token}`
