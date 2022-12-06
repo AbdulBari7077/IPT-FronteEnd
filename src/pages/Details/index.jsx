@@ -6,7 +6,7 @@ import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
 import RateDialog from '../../components/rateMovie';
-import { addMovieToUserHistory, addToFavlist, checkFavList, getMovieById, getRecommendedMovies, RemoveFromFavlist } from '../../api/Api';
+import { addMovieToUserHistory, addToFavlist, checkFavList, getMovieById, getRecommendedMovies, RemoveFromFavlist, updateRecommendationList } from '../../api/Api';
 import AddIcon from '@mui/icons-material/Add';
 
 function Details() {
@@ -38,12 +38,8 @@ function Details() {
         setDialogRateOpen(false);
     }
     async function handleShowTrailer() {
-        // console.log("movieDetails.movieId",movieDetails.movieId,userData['uid'],userData['token'])
-        // const recommendedMovies = await getRecommendedMovies(movieDetails.movieId);
-        // setRecommendedMovies(recommendedMovies?.data);
-        // console.log(recommendedMovies,"recommendedMovies")
-        // const response = await addMovieToUserHistory(userData['uid'],movieDetails.movieId,userData['token']); 
-        // console.log(response,"handleShowTrailer");
+        const response = await updateRecommendationList(movieDetails.movieId,userData['uid']);
+        console.log("recommendedMovies",response);
         setUrlVideo(movieDetails.trailerUrl);
     }
    

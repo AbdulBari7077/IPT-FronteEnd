@@ -13,7 +13,8 @@
     overflow-y: hidden;
     overflow-x: hidden;
     margin-left: 40px;
-    height: 200px;
+    /* height: 200px; */
+    height: 100%;
 }
 
 .movieRow--list {
@@ -22,7 +23,7 @@
 
 .movieRow--item {
     display: inline-block;
-    width: 150px;
+    width: 180px;
     cursor: pointer;
 }
 

@@ -30,7 +30,7 @@ function MovieRow({ title, items }) {
 
   const handleRightArrow = () => {
     let x = scrollX - Math.round(window.innerWidth / 2);
-    let listW = items.length * 200;
+    let listW = items.length * 400;
     if ((window.innerWidth - listW) > x) {
       x = (window.innerWidth - listW) - 80;
     }
@@ -50,7 +50,7 @@ function MovieRow({ title, items }) {
       </div>
 
       <div className="movieRow--listarea">
-        <div className="movieRow--list" style={{ marginLeft: scrollX, width: items?.length * 100 }}>
+        <div className="movieRow--list" style={{ marginLeft: scrollX, width: items?.length * 200 }}>
           {
             (favList.length>0?favList:items).map((item, key) => {
               return(

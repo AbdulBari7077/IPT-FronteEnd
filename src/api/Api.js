@@ -294,9 +294,23 @@ export const addMovieToUserHistory = async (userId,movieId,userToken) => {
         return false
     }
 }
-export const getRecommendedMovies = async (movieId) => {
+export const getRecommendedMovies = async (userId,token) => {
     try {
-        const response = await axios.get(`${BASE_URL}/Movie/Recommendation?id=${movieId}`)
+        const response = await axios.get(`${BASE_URL}/User/getRecommendation?uid=${userId}`,{
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        return response;
+    }
+    catch (err) {
+        console.log(err);
+        return false
+    }
+}
+export const updateRecommendationList = async (movieId,userId) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/Movie/Recommendation?id=${movieId}&uid=${userId}`)
         return response;
     }
     catch (err) {

@@ -16,7 +16,7 @@ function Home() {
   const [movieList, setMovieList] = useState([]);
   const [blackHeader, setBlackHeader] = useState(false);
   const [myFavList, setMyFavList] = useState([]);
-  // const [recommendationList, setRecommendationList] = useState([]);
+  const [recommendationList, setRecommendationList] = useState([]);
   
   async function HandleAddFavlist(){
     if(inFavList)
@@ -50,17 +50,26 @@ function Home() {
   useEffect(() => {
     
     const loadAll = async () => {
+      const recommendedMovies= await getRecommendedMovies(userData['uid'],userData['token']);
+      console.log("recommendedMovies",recommendedMovies)
+      if(recommendedMovies.data.length>0){
+        console.log("first")
+        setRecommendationList(recommendedMovies.data);
+      }
       const movies= await getMovies();
-      
       setMovieList(movies.data.data);
       let movieChosenData = await getRandomMovie();
+
       if(movieChosenData?.data.status){
         // console.log(userData['uid'],movieChosenData.data.data.Movies?.movieId,userData['token'],"checkFavListResponse")
         setFeaturedData(movieChosenData?.data.data.Movies);
         const checkFavListResponse = await checkFavList(userData['uid'],movieChosenData?.data.data.Movies?.movieId,userData['token']);
         // console.log(movieChosenData.data.data.Movies?.title,"checkFavListResponse")
         if(checkFavListResponse.data.status){
-          return setInFavList(true);
+          setInFavList(true);
+        }
+        else{
+          setInFavList(false);
         }
       }
     }
@@ -109,6 +118,9 @@ function Home() {
       {
         featuredData &&
         <FeaturedMovie item={featuredData} HandleAddFavlist={HandleAddFavlist} inFavList={inFavList}/>
+      }
+      {
+        recommendationList?.length>0 && <MovieRow key={"Recommendation"}  title={ "Recommendation" } items={recommendationList} />
       }
       <section className="lists">
         {
