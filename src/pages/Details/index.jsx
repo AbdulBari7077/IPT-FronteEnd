@@ -78,6 +78,7 @@ function Details() {
                 setRateValue={setRateValue}
                 rateValue={rateValue}
                 onSubmit={rateValue}
+                movieId={movieDetails?.movieId}
             />
             <main
                 className="details"
@@ -91,7 +92,7 @@ function Details() {
                 <section>
                     <div>
                         <div className="details--info">
-                            <h3 className={movieDetails.vote_average > 5 ? 'positive' : 'negative'}>{movieDetails.rating * 10 + '%'}</h3>
+                            <h3 className={movieDetails.rating * 10  > 50 ? 'positive' : 'negative'}>{(Math.round(movieDetails.rating * 10 ))+ '%'}</h3>
                             <button className='rate-movie' onClick={() => {
                                 setDialogRateOpen(true)
                             }}> Rate Movie

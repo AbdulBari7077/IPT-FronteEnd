@@ -304,3 +304,13 @@ export const getRecommendedMovies = async (movieId) => {
         return false
     }
 }
+export const updateMovieRating = async (movieId,rating) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/Movie/UpdateRating?id=${movieId}&rating=${rating}`)
+        return response;
+    }
+    catch (err) {
+        console.log(err);
+        return false
+    }
+}

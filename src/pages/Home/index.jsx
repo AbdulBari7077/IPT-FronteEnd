@@ -16,6 +16,7 @@ function Home() {
   const [movieList, setMovieList] = useState([]);
   const [blackHeader, setBlackHeader] = useState(false);
   const [myFavList, setMyFavList] = useState([]);
+  // const [recommendationList, setRecommendationList] = useState([]);
   
   async function HandleAddFavlist(){
     if(inFavList)
@@ -44,7 +45,7 @@ function Home() {
       console.log(getUserFavourits.data.Favlist,"getUserFavourits");
     })();
   },[inFavList])
-
+  
 
   useEffect(() => {
     
@@ -53,10 +54,10 @@ function Home() {
       
       setMovieList(movies.data.data);
       let movieChosenData = await getRandomMovie();
-      if(movieChosenData.data.status){
+      if(movieChosenData?.data.status){
         // console.log(userData['uid'],movieChosenData.data.data.Movies?.movieId,userData['token'],"checkFavListResponse")
-        setFeaturedData(movieChosenData.data.data.Movies);
-        const checkFavListResponse = await checkFavList(userData['uid'],movieChosenData.data.data.Movies?.movieId,userData['token']);
+        setFeaturedData(movieChosenData?.data.data.Movies);
+        const checkFavListResponse = await checkFavList(userData['uid'],movieChosenData?.data.data.Movies?.movieId,userData['token']);
         // console.log(movieChosenData.data.data.Movies?.title,"checkFavListResponse")
         if(checkFavListResponse.data.status){
           return setInFavList(true);
@@ -111,7 +112,7 @@ function Home() {
       }
       <section className="lists">
         {
-          movieList.map((item , key)=>{
+          movieList?.map((item , key)=>{
             if(Object.entries(item)[0][1].length>0){
               return <MovieRow key={key} title={ Object.entries(item)[0][0] } items={Object.entries(item)[0][1]} />
             }
@@ -120,7 +121,7 @@ function Home() {
       </section>
       <div>
         {
-          myFavList.length>0 && <MovieRow key={featuredData?.movieId}  title={ "Fav List" } items={myFavList} />
+          myFavList?.length>0 && <MovieRow key={featuredData?.movieId}  title={ "Fav List" } items={myFavList} />
         }
       </div>
       <footer>
