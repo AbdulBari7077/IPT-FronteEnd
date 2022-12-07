@@ -82,7 +82,7 @@ function Details() {
                 style={{
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    backgroundImage: `url(${movieDetails.posterUrl})`
+                    backgroundImage: `url(${movieDetails.thumbnailUrl})`
                 }}
             >
                 <button onClick={() => navigate(-1)} className="details--backbutton">Back</button>

@@ -12,7 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 const ManageProfile = () => {
     const userData = JSON.parse(localStorage.getItem('userData'));
     const navigate = useNavigate();
-    const [image, setImage] = React.useState('');
+    const [image, setImage] = React.useState('../../../src/assets/Netflix-avatar.png');
     const [subscription, setsubscription] = React.useState();
     const [Id, setId] = React.useState();
     const [name, setName] = React.useState();
@@ -31,19 +31,20 @@ const ManageProfile = () => {
             Restriction: maturity,
             Subscription:subscription,
         }
-        console.log(userUpdatedData);
+        // console.log(userUpdatedData,"MANAGE PROFILE");
         // console.log("USERDATA: ",userData["token"]);
         const response = await EditProfile(userUpdatedData,userData["token"]);
-        if(response?.data.code === 200)
+        console.log(response,"MANAGE PROFILE response");
+        if(response?.data?.userId)
         {
             console.log(response)
-            toast.success(response.data.message, {
+            toast.success("User Sucessfully Updated", {
                 position: toast.POSITION.TOP_RIGHT,
                 classNames:'toster'
             })
         }
         else{
-            toast.error(response.data.message, {
+            toast.error("Usaaaer Updation Failed", {
                 position: toast.POSITION.TOP_RIGHT,
                 classNames:'toster'
             })
@@ -64,12 +65,13 @@ const ManageProfile = () => {
         else {
             (async ()=>{
                 const getUserDataResponse = await getUserData(userData.uid,userData.token);
-                console.log(getUserDataResponse.data)
+                console.log(getUserDataResponse.data,"MANAGE PROFILE")
                 setId(getUserDataResponse.data.UserId)
                 setEmail(getUserDataResponse.data.Email)
                 setName(getUserDataResponse.data.Name)
                 setsubscription(getUserDataResponse.data.Subscription)
                 setMaturity(getUserDataResponse.data.Restriction)
+                setImage(getUserDataResponse.data.Avatar)
             })();
            
             // return isSubscribed.data.message?navigate('/home'):navigate('/choosePlan');
@@ -99,7 +101,7 @@ const ManageProfile = () => {
                             User Information
                         </h2>
                         <div className='section-1'>
-                            <img className='image' src={!image ? '../../../src/assets/Netflix-avatar.png' : image} alt="" />
+                            <img className='image' src={image} alt="" />
                             <div className='image-selector'>
                                 <Select
                                     className='image-select'
