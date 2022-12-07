@@ -25,12 +25,12 @@ const ChoosePlan = () => {
         {
             // console.log(userData['token'])
             const response=await verifyEmail(userData['uid'],userData['token']);
-            if(response.data.code === 200)
+            if(response?.data.code === 200)
             {
                 console.log(response,"RESPONSE CHOOSE PLAN ");
                 
             }
-            alert(await response.data.message)
+            alert(await response?.data.message)
             return navigate('/choosePlan');
         }
         else{
