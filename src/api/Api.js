@@ -1,5 +1,5 @@
 
-const BASE_URL = "https://localhost:44318"
+const BASE_URL = "http://128.199.68.100"
 export const LoginApi = async (userEmail, password) => {
     try {
         const response=await  axios.post(`${BASE_URL}/user/login`, {
