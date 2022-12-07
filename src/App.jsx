@@ -32,6 +32,7 @@ function App() {
                 </Route>
                 <Route path="/manageProfile"  element={<ManageProfile/>} />
                 <Route path="/forgetPassword/:email"  element={<ForgetPassword/>} />
+                <Route path="/forgetPassword"  element={<ForgetPassword login={"login"}/>} />
             </Routes >        
         </BrowserRouter>
     </div>

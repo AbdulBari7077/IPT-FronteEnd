@@ -20,7 +20,8 @@ const ChoosePlan = () => {
     {
         const userData=JSON.parse(localStorage.getItem('userData'))
         const isVerified=await checkVerification(userData['uid'],userData['token']);
-        if(!isVerified.data.message)
+        console.log(isVerified,"isVerified")
+        if(!isVerified?.data.message)
         {
             // console.log(userData['token'])
             const response=await verifyEmail(userData['uid'],userData['token']);

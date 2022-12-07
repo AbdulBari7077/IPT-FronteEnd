@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { SignUpApi } from '../../api/Api';
 import EmailInput from '../../components/EmailForm/EmailInput';
 
 import '../Login/style.css';
 
 export default function SignUp() {
+    const navigate=useNavigate();
     const HandleSignUp =async (event)=>{
         event.preventDefault();
         const {userName,userEmail , password} = document.forms[0];
@@ -19,7 +20,7 @@ export default function SignUp() {
             console.log("SignUp Failed",response.data.message );
         }
         alert(await response.data.message);
-        return;
+        return navigate('/login');
     }
     return (
         <div className="login-body" >

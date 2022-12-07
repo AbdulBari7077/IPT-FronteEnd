@@ -18,7 +18,7 @@ function FeaturedMovie({ item , HandleAddFavlist, inFavList}) {
       style={{
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundImage: `url(${item.posterUrl})`
+        backgroundImage: `url(${item.thumbnailUrl})`
       }}
     >
       <div className="featured--vertical">

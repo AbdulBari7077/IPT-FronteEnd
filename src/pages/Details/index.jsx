@@ -6,7 +6,7 @@ import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
 import RateDialog from '../../components/rateMovie';
-import { addToFavlist, checkFavList, getMovieById, RemoveFromFavlist } from '../../api/Api';
+import { addMovieToUserHistory, addToFavlist, checkFavList, getMovieById, getRecommendedMovies, RemoveFromFavlist, updateRecommendationList } from '../../api/Api';
 import AddIcon from '@mui/icons-material/Add';
 
 function Details() {
@@ -20,6 +20,7 @@ function Details() {
     const [dialogRateOpen, setDialogRateOpen] = useState(false);
     const [rateValue, setRateValue] = useState(3);
     const [inFavList, setInFavList] = useState(false);
+    // const [recommendedMovies, setRecommendedMovies] = useState([]);
     useEffect(() => {
         const loadAll = async () => {
             const movie = await getMovieById(id);
@@ -36,9 +37,13 @@ function Details() {
     const handleCloseDialog = () => {
         setDialogRateOpen(false);
     }
-    function handleShowTrailer() {
+    async function handleShowTrailer() {
+        const response = await updateRecommendationList(movieDetails.movieId,userData['uid']);
         setUrlVideo(movieDetails.trailerUrl);
+        console.log("recommendedMovies",response);
+        
     }
+   
     function handleVideoFullScreen() {
         setVideoFullScreen(!videoFullScreen);
     }
@@ -69,20 +74,22 @@ function Details() {
                 handleCloseRateDialog={handleCloseDialog}
                 setRateValue={setRateValue}
                 rateValue={rateValue}
+                onSubmit={rateValue}
+                movieId={movieDetails?.movieId}
             />
             <main
                 className="details"
                 style={{
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    backgroundImage: `url(${movieDetails.posterUrl})`
+                    backgroundImage: `url(${movieDetails.thumbnailUrl})`
                 }}
             >
                 <button onClick={() => navigate(-1)} className="details--backbutton">Back</button>
                 <section>
                     <div>
                         <div className="details--info">
-                            <h3 className={movieDetails.vote_average > 5 ? 'positive' : 'negative'}>{movieDetails.rating * 10 + '%'}</h3>
+                            <h3 className={movieDetails.rating * 10  > 50 ? 'positive' : 'negative'}>{(Math.round(movieDetails.rating * 10 ))+ '%'}</h3>
                             <button className='rate-movie' onClick={() => {
                                 setDialogRateOpen(true)
                             }}> Rate Movie

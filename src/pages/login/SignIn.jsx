@@ -12,19 +12,21 @@ export default function SignIn() {
         const {userEmail , password} = document.forms[0];
         const response = await LoginApi(userEmail.value,password.value);
         console.log(response,"REsponse");
-        if(response.data.uid)
+        if(response?.data.uid)
         {
             console.log("Login successful");
             const userData={ 
                 "uid": response.data.uid,
                 "token":response.data.token,
             }
-            console.log("USERDATA",userData);
+           
             localStorage.setItem('userData', JSON.stringify(userData));
+           
             const isSubscribed = await checkUserSubscribed(userData.uid,userData.token);
-            if(isSubscribed.data.code === 200 )
+            console.log("USERDATA",localStorage.getItem('userData'),isSubscribed);
+            if(isSubscribed?.data.code === 200 )
             {
-                if(response.data.isVerified && isSubscribed.data.message)
+                if(response?.data.isVerified && isSubscribed?.data.message)
                 {
                     return navigate('/home');
                 }
@@ -38,7 +40,7 @@ export default function SignIn() {
             // return navigate('/choosePlan');
         }
         else{
-            alert(response.data.message);
+            alert(response?.data.message);
             return console.log("Login Failed");
         }
     }

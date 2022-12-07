@@ -31,11 +31,12 @@ const CreditCard = () => {
         console.log(state,"State");
         const userData = JSON.parse(localStorage.getItem('userData'));
         const responseSubsriptionPlan= await addSubscriptionPlan(userData['uid'],userData['token'],selectPlan);
-        if(responseSubsriptionPlan.data.code === 200){
+        console.log(responseSubsriptionPlan,"responseSubsriptionPlan")
+        if(responseSubsriptionPlan?.data.code === 200){
             return navigate("/home");
         }
         else{
-            alert(responseSubsriptionPlan.data.message);
+            alert(responseSubsriptionPlan?.data.message);
             return navigate("/choosePlan");
         }
     }

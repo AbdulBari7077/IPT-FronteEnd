@@ -1,6 +1,5 @@
 
-const BASE_URL = "https://localhost:44318"
-
+const BASE_URL = "http://128.199.68.100"
 export const LoginApi = async (userEmail, password) => {
     try {
         const response=await  axios.post(`${BASE_URL}/user/login`, {
@@ -130,13 +129,14 @@ export const resetPassword =async (email,token)=>{
 
 export const EditProfile =async (data,token)=>{
     try {
-        const response =await axios.put(`${BASE_URL}/user/update`,{
+        console.log(data,"DATA")
+        const response =await axios.post(`${BASE_URL}/user/Update`,data,
+        {
             headers: {
               'Authorization': `Bearer ${token}`
             }
-        },{
-            data
-        });
+        }
+        );
         return await response;
     }
     catch (err) {
@@ -270,6 +270,54 @@ export const getFavListMovies = async (favListIds) => {
         {
             favListIds
         })
+        return response;
+    }
+    catch (err) {
+        console.log(err);
+        return false
+    }
+}
+export const addMovieToUserHistory = async (userId,movieId,userToken) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/User/addToHistory?uid=${userId}&movie=${movieId}`, {
+            headers: {
+                'Authorization': `Bearer ${userToken}`
+            }
+        })
+        return response;
+    }
+    catch (err) {
+        console.log(err);
+        return false
+    }
+}
+export const getRecommendedMovies = async (userId,token) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/User/getRecommendation?uid=${userId}`,{
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        return response;
+    }
+    catch (err) {
+        console.log(err);
+        return false
+    }
+}
+export const updateRecommendationList = async (movieId,userId) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/Movie/Recommendation?id=${movieId}&uid=${userId}`)
+        return response;
+    }
+    catch (err) {
+        console.log(err);
+        return false
+    }
+}
+export const updateMovieRating = async (movieId,rating) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/Movie/UpdateRating?id=${movieId}&rating=${rating}`)
         return response;
     }
     catch (err) {
